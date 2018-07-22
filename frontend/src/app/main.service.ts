@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,15 @@ export class MainService {
   constructor(private http: HttpClient) { }
 
   getData() {
-    this.http.get('http://localhost:8080').subscribe(
+    this.http.get('/api').subscribe(
       data => {
+        console.log("DATA");
         console.log(data);
+      },
+      erro => {
+        console.log("erro");
+        console.log(erro);
       });
-
-
-    return "works";
   }
 
 }

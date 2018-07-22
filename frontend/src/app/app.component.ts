@@ -13,8 +13,7 @@ export class AppComponent implements OnInit{
   constructor(private mainService: MainService) { }
 
   ngOnInit(): void {
-    console.log('ok');
-    console.log(this.mainService.getData());
+    this.mainService.getData();
   }
   
 
