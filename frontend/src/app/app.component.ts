@@ -8,14 +8,17 @@ import { MainService } from './main.service';
 })
 export class AppComponent implements OnInit{
   
-  title = 'app';
+  title: string = 'Clínica sua Saúde';
 
-  constructor(private mainService: MainService) { }
+
+  constructor(
+    private mainService: MainService
+  ) { }
 
   ngOnInit(): void {
     this.mainService.getData();
   }
   
-
+  
 
 }
