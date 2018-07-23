@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from './main.service';
+import { User } from './models/user';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +9,31 @@ import { MainService } from './main.service';
 })
 export class AppComponent implements OnInit{
   
-  title = 'app';
+  title: string = 'Clínica sua Saúde';
+  user: User = new User();
 
-  constructor(private mainService: MainService) { }
+  constructor(
+    private mainService: MainService
+  ) { }
 
   ngOnInit(): void {
-    this.mainService.getData();
+  }
+
+  login() {
+    if(this.user.username && this.user.password) {
+      this.mainService.login(this.user).subscribe(
+        data => {
+          this.user = data;
+          console.log(this.user);
+        },
+        erro => {
+          console.log(erro);
+        });
+    } else {
+      alert("Todos os campos são obrigatórios");
+    }
   }
   
-
+  
 
 }
