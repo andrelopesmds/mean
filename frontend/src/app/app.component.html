@@ -8,12 +8,12 @@
 
   <form class="login-form">
     <mat-form-field>
-      <input matInput placeholder="Nome de usuário" required>
+      <input matInput [(ngModel)]="username" name="username" placeholder="Nome de usuário" required>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Senha" required>
+      <input matInput [(ngModel)]="password" name="password" type="password" placeholder="Senha" required>
     </mat-form-field>
-    <button mat-raised-button>Entrar!</button>
+    <button type="button" mat-raised-button (click)="login()">Entrar!</button>
   </form>
 
 </div>

@@ -22,7 +22,8 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angul
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

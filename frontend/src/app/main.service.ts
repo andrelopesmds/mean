@@ -20,4 +20,15 @@ export class MainService {
       });
   }
 
+  login(username: string, password: string) {
+    console.log("we are trying", username," - ", password);
+    this.http.get('/api?username='+ username + '&password=' + password).subscribe(
+      data => {
+        console.log(data);
+      },
+      erro => {
+        console.log(erro);
+      });
+  }
+
 }

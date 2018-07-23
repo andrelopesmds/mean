@@ -9,6 +9,8 @@ import { MainService } from './main.service';
 export class AppComponent implements OnInit{
   
   title: string = 'Clínica sua Saúde';
+  username: string;
+  password: string;
 
 
   constructor(
@@ -17,6 +19,15 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.mainService.getData();
+  }
+
+  login() {
+    if(this.username && this.password) {
+      console.log(this.username, this.password);
+      this.mainService.login(this.username, this.password);
+    } else {
+      alert("Todos os campos são obrigatórios");
+    }
   }
   
   

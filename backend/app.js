@@ -6,7 +6,7 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json())
 
 app.get('/', function(req, res) {
-    console.log(req);
+    console.log(req.query);
     res.setHeader('Content-Type', 'application/json');
     res.send({
         'status' : 'success',
@@ -15,7 +15,7 @@ app.get('/', function(req, res) {
 })
 
 app.get('/api' , function(req, res) {
-    console.log(req.body);
+    console.log(req.query);
     res.setHeader('Content-Type', 'application/json');
     res.send({
         'status' : 'success',
