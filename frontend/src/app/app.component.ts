@@ -24,16 +24,18 @@ export class AppComponent implements OnInit{
       this.mainService.login(this.user).subscribe(
         data => {
           this.user = data;
-          console.log(this.user);
+          if(this.user.role != 'admin' && this.user.role != 'assistente' && this.user.role != 'medico') {
+            alert("Usuário não encontrado ou sem permissão de acesso");
+          }
         },
         erro => {
           console.log(erro);
+          alert("Houve problema de conexão ao efetuar login, entre em contato com o administrador");
         });
     } else {
       alert("Todos os campos são obrigatórios");
     }
   }
-  
-  
+    
 
 }
