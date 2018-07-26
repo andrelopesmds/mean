@@ -10,7 +10,7 @@ export class MainService {
   constructor(private http: HttpClient) { }
 
   login(user: User) {
-    return this.http.get<User>('/api?route=login&?username='+ user.username + '&password=' + user.password);
+    return this.http.get<User>('/api/login?username='+ user.username + '&password=' + user.password);
   }
 
 }

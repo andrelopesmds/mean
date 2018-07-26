@@ -1,29 +1,33 @@
-<div *ngIf="user.role == ''" class="container-tudo" style="text-align:center">
-  <h1>
-    Bem vindo à {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div [ngSwitch]="user.role">
 
-  <h2>Here are some links to help you start: </h2>
+  <div *ngSwitchDefault class="container-tudo" style="text-align:center">
+    <h1>
+      Bem vindo à {{ title }}!
+    </h1>
+    <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 
-  <form class="login-form">
-    <mat-form-field>
-      <input matInput [(ngModel)]="user.username" name="username" placeholder="Nome de usuário" required>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [(ngModel)]="user.password" name="password" type="password" placeholder="Senha" required>
-    </mat-form-field>
-    <button type="button" mat-raised-button (click)="login()">Entrar!</button>
-  </form>
+    <h2>Here are some links to help you start: </h2>
 
-</div>
+    <form class="login-form">
+      <mat-form-field>
+        <input matInput [(ngModel)]="user.username" name="username" placeholder="Nome de usuário" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="user.password" name="password" type="password" placeholder="Senha" required>
+      </mat-form-field>
+      <button type="button" mat-raised-button (click)="login()">Entrar!</button>
+    </form>
 
-<div *ngIf="user.role == 'adm'">
-  Bem vindo adm
-</div>
-<div *ngIf="user.role == 'assistnte'">
-  Bem vindo assistente
-</div>
-<div *ngIf="user.role == 'medico'">
-  Bem vindo medico
+  </div>
+
+  <div *ngSwitchCase="'admin'">
+    Bem vindo adm
+  </div>
+  <div *ngSwitchCase="'assistnte'">
+    Bem vindo assistente
+  </div>
+  <div *ngSwitchCase="'medico'">
+    Bem vindo medico
+  </div>
+
 </div>
