@@ -6,14 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { MatCheckboxModule, MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { MatCheckboxModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatTabsModule, MatSelectModule, MatTableModule, MatIcon, MatIconModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +25,11 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angul
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    MatTabsModule,
+    MatSelectModule,
+    MatTableModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -37,3 +37,21 @@ exports.login = function(username, password, callback) {
         callback(res);
     });
 }
+
+exports.getUsers = function(callback) {
+    dbo.collection(collectionName1).find().toArray(function(err, res) {
+        if (err)
+            throw err;
+
+    callback(res);
+    });
+}
+
+exports.insertUser = function(username, password, role, cpf, phone, callback) {
+    dbo.collection(collectionName1).insertOne({ username: username, password: password, role: role, cpf: cpf, phone: phone}, function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
