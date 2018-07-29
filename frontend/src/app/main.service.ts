@@ -27,4 +27,12 @@ export class MainService {
     return this.http.post<any>('api/users', user, this.httpOptions);
   }
 
+  updateUser(user: User) {
+    return this.http.put<any>('api/users', user, this.httpOptions);
+  }
+
+  removeUser(user: User) {
+    return this.http.delete<any>('api/users?username='+ user.username, this.httpOptions);
+  }
+
 }

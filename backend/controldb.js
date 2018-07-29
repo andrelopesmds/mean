@@ -11,7 +11,7 @@ exports.createdb = function() {
         if (err)
             throw err;
 
-        console.log("Created clinica db");
+        console.log("Created/connected to clinica database");
         dbo = db.db(dbName);
         dbo.createCollection(collectionName1, function(err, res) {
             if (err)
@@ -23,14 +23,14 @@ exports.createdb = function() {
             if (err)
                 throw err;
 
-            console.log("Created collection Medicos");
+            console.log("Created collection Medicos!");
         });
     });
 }
 
 exports.login = function(username, password, callback) {
 
-    dbo.collection(collectionName1).find({ username: username, password: password }).toArray(function(err, res) {
+    dbo.collection(collectionName1).find({ username: username, password: password, active: true }).toArray(function(err, res) {
         if (err)
             throw err;
 
@@ -39,7 +39,8 @@ exports.login = function(username, password, callback) {
 }
 
 exports.getUsers = function(callback) {
-    dbo.collection(collectionName1).find().toArray(function(err, res) {
+    var filter = { active: true };
+    dbo.collection(collectionName1).find(filter).toArray(function(err, res) {
         if (err)
             throw err;
 
@@ -48,7 +49,34 @@ exports.getUsers = function(callback) {
 }
 
 exports.insertUser = function(username, password, role, cpf, phone, callback) {
-    dbo.collection(collectionName1).insertOne({ username: username, password: password, role: role, cpf: cpf, phone: phone}, function(err, res) {
+    dbo.collection(collectionName1).insertOne({ username: username, password: password, role: role, cpf: cpf, phone: phone, active: true}, function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.updateUser = function(username, password, role, cpf, phone, callback) {
+    var filter = { username: username };
+    var obj = { $set: {
+        password: password,
+        role: role,
+        cpf: cpf,
+        phone: phone
+    }};
+    dbo.collection(collectionName1).updateOne(filter, obj, function(err, res){
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.deleteUser = function(username, callback) {
+    var filter = { username: username };
+    var obj = { $set: { active: false }};
+    dbo.collection(collectionName1).updateOne(filter, obj, function(err, res) {
         if(err)
             throw err;
 

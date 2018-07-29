@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { User } from '../models/user';
 import { MainService} from '../main.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { copyObj } from '@angular/animations/browser/src/util';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,6 +20,7 @@ export class AdminDashboardComponent implements OnInit {
   dataSource = new MatTableDataSource<User>();
 
   constructor(
+    public dialog: MatDialog,
     private mainService: MainService
   ) { }
 
@@ -27,21 +31,21 @@ export class AdminDashboardComponent implements OnInit {
 
 
   listUsers() {
+    this.users = [];
     this.mainService.listUsers().subscribe(
       data => {
         if(data.length > 0) {
-          this.users = [];
           data.forEach(user => {
             this.users.push(user);
           });
-          this.dataSource.data = this.users;
         } else {
-          alert("Houve problema ao listar usuários ou não há usuários cadastrados");
+          alert("Houve problema ao listar usuários ou não há usuários cadastrados.");
         }
+        this.dataSource.data = this.users;
       },
       erro => {
         console.log(erro);
-        alert("Houve problema ao listar usuários, entre em contato com o administrador");
+        alert("Houve problema ao listar usuários, entre em contato com o administrador.");
       }
     )
   }
@@ -50,25 +54,90 @@ export class AdminDashboardComponent implements OnInit {
     if(this.newUser.username && this.newUser.password && this.newUser.role && this.newUser.cpf && this.newUser.phone) {
       this.mainService.insertUser(this.newUser).subscribe(
         data => {
-          if(data.status && data.status == true) {
-            alert("Usuário cadastrado com sucesso");
+          if(data.status) {
             this.listUsers();
+            alert(this.newUser.username + " foi cadastrado com sucesso!");
           } else {
-            alert("Houve problema de conexão ao efetuar cafastro, entre em contato com o administrador");  
+            alert("Houve problema de conexão ao efetuar cafastro, entre em contato com o administrador.");  
           }
         },
         erro => {
           console.log(erro);
-          alert("Houve problema de conexão ao efetuar cafastro, entre em contato com o administrador");
+          alert("Houve problema de conexão ao efetuar cafastro, entre em contato com o administrador.");
         });
     } else {
       alert("Todos os campos são obrigatórios");
     }
   }
 
-  teste(user: User) {
-    console.log("ok");
-    console.log(user);
+  updateDialog(user) {
+    const dialogRef = this.dialog.open(UpdateDialogComponent, {
+      data: {
+        user: this.makeCopy(user)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.response && !this.isEqual(result.user, user)) {
+        this.mainService.updateUser(result.user).subscribe(
+         data => {
+           if(data.status) {
+             this.listUsers();
+             alert(result.user.username + " foi atualizado.");
+           }
+         },
+         erro => {
+           console.log(erro);
+         }
+        )
+      } else if(result && result.response) {
+        alert("Não houveram modificações para atualizar.");
+      }
+    });
+  }
+
+  deleteConfirmation(user) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Tem certeza que deseja excluir ' + user.username + '?',
+        buttonLabel: 'Excluir'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.response) {
+        this.removeUser(user);
+      }
+    });
+  }
+
+  removeUser(user: User) {
+    this.mainService.removeUser(user).subscribe(
+      data => {
+        if(data.status) {
+          this.listUsers();
+          alert(user.username + " foi removido com sucesso");
+        } else {
+          alert("Houve problema de conexão ao tentar remover o usuário ou este não foi encontrado, entre em contato com o administrador.");
+        }
+      },
+      erro => {
+        console.log(erro);
+        alert("Houve problema de conexão ao tentar remover o usuário, entre em contato com o administrador.");
+      }
+    );
+  }
+
+  makeCopy(obj) {
+    return (JSON.parse(JSON.stringify(obj)));
+  }
+
+  isEqual(obj1, obj2) {
+    if(JSON.stringify(obj1) == JSON.stringify(obj2)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
