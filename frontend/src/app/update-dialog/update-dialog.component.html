@@ -5,6 +5,9 @@
 </div>
 <div>
   <form class="update-user-form">
+      <mat-form-field>
+          <input matInput [(ngModel)]="user.name" name="name" placeholder="Nome" required>
+        </mat-form-field>
     <mat-form-field>
       <input matInput [(ngModel)]="user.password" name="password" placeholder="Senha" required>
     </mat-form-field>

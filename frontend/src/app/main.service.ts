@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './models/user';
+import { Patient } from './models/patient';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,22 @@ export class MainService {
 
   removeUser(user: User) {
     return this.http.delete<any>('api/users?username='+ user.username, this.httpOptions);
+  }
+
+  listPacients() {
+    return this.http.get<Array<Patient>>('api/patients');
+  }
+
+  insertPatient(patient: Patient) {
+    return this.http.post<any>('api/patients', patient, this.httpOptions);
+  }
+
+  updatePatient(patient: Patient) {
+    return this.http.put<any>('api/patients', patient, this.httpOptions);
+  }
+
+  removePatient(patient: Patient) {
+    return this.http.delete<any>('api/patients?cpf=' + patient.cpf, this.httpOptions);
   }
 
 }

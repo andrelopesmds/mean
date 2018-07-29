@@ -1,0 +1,67 @@
+<h1>Pacientes</h1>
+
+<mat-tab-group>
+  <mat-tab label="Listar">
+    <div class="mat-table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef>Idade</th>
+          <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cpf">
+          <th mat-header-cell *matHeaderCellDef>CPF</th>
+          <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Telefone</th>
+          <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="button-update">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button type="button" mat-raised-button color="accent" (click)="updatePatientDialog(element)">Atualizar</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="button-remove">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button type="button" mat-raised-button color="warn" (click)="deleteConfirmation(element)">Remover</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="Cadastrar">
+
+    <form class="new-patient-form">
+      <mat-form-field>
+        <input matInput [(ngModel)]="newPatient.name" name="name" placeholder="Nome" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="newPatient.age" name="age" placeholder="Idade" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="newPatient.cpf" name="cpf" placeholder="CPF" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="newPatient.phone" name="phone" placeholder="Telefone" required>
+      </mat-form-field>
+      <button type="button" mat-raised-button color="primary" (click)="insertPatient()">Cadastrar</button>
+    </form>
+
+  </mat-tab>
+</mat-tab-group>
