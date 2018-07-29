@@ -4,6 +4,7 @@ var url = "mongodb://localhost:27017/";
 var dbName = "clinica";
 var collectionName1 = "users";
 var collectionName2 = "medicos";
+var collectionName3 = "patients";
 var dbo;
 
 exports.createdb = function() {
@@ -17,13 +18,19 @@ exports.createdb = function() {
             if (err)
                 throw err;
 
-            console.log("Created collection Users!");
+            console.log("Created collection " + collectionName1 + "!");
         });
         dbo.createCollection(collectionName2, function(err, res) {
             if (err)
                 throw err;
 
-            console.log("Created collection Medicos!");
+            console.log("Created collection " + collectionName2 + "!");
+        });
+        dbo.createCollection(collectionName3, function(err, res) {
+            if (err)
+                throw err;
+
+            console.log("Created collection " + collectionName3 + "!");
         });
     });
 }
@@ -40,16 +47,17 @@ exports.login = function(username, password, callback) {
 
 exports.getUsers = function(callback) {
     var filter = { active: true };
-    dbo.collection(collectionName1).find(filter).toArray(function(err, res) {
+    var proj = { projection: { _id: 0 }};
+    dbo.collection(collectionName1).find(filter, proj).toArray(function(err, res) {
         if (err)
             throw err;
 
-    callback(res);
+        callback(res);
     });
 }
 
-exports.insertUser = function(username, password, role, cpf, phone, callback) {
-    dbo.collection(collectionName1).insertOne({ username: username, password: password, role: role, cpf: cpf, phone: phone, active: true}, function(err, res) {
+exports.insertUser = function(username, name, password, role, cpf, phone, callback) {
+    dbo.collection(collectionName1).insertOne({ username: username, name: name, password: password, role: role, cpf: cpf, phone: phone, active: true}, function(err, res) {
         if(err)
             throw err;
 
@@ -57,9 +65,10 @@ exports.insertUser = function(username, password, role, cpf, phone, callback) {
     });
 }
 
-exports.updateUser = function(username, password, role, cpf, phone, callback) {
+exports.updateUser = function(username, name, password, role, cpf, phone, callback) {
     var filter = { username: username };
     var obj = { $set: {
+        name: name,
         password: password,
         role: role,
         cpf: cpf,
@@ -77,6 +86,53 @@ exports.deleteUser = function(username, callback) {
     var filter = { username: username };
     var obj = { $set: { active: false }};
     dbo.collection(collectionName1).updateOne(filter, obj, function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.getPatients = function(callback) {
+    var filter = { active: true };
+    var proj = { projection: { _id : 0 } };
+    dbo.collection(collectionName3).find(filter, proj).toArray(function(err, res) {
+        if (err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+
+exports.insertPatient = function(name, age, cpf, phone, callback) {
+    dbo.collection(collectionName3).insertOne({ name: name, age: age, cpf: cpf, phone: phone, active: true}, function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.updatePatient = function(name, age, cpf, phone, callback) {
+    var filter = { cpf: cpf };
+    var obj = { $set: {
+        name: name,
+        age: age,
+        phone: phone
+    }};
+    dbo.collection(collectionName3).updateOne(filter, obj, function(err, res){
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.deletePatient = function(cpf, callback) {
+    var filter = { cpf: cpf };
+    var obj = { $set: { active: false }};
+    dbo.collection(collectionName3).updateOne(filter, obj, function(err, res) {
         if(err)
             throw err;
 

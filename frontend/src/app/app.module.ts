@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angul
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
+import { AssistantDashboardComponent } from './assistant-dashboard/assistant-dashboard.component';
+import { PatientsComponent } from './assistant-dashboard/patients/patients.component';
+import { UpdatePatientDialogComponent } from './assistant-dashboard/update-patient-dialog/update-patient-dialog.component';
 
 
 
@@ -19,11 +22,15 @@ import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
     AppComponent,
     AdminDashboardComponent,
     ConfirmationDialogComponent,
-    UpdateDialogComponent
+    UpdateDialogComponent,
+    AssistantDashboardComponent,
+    PatientsComponent,
+    UpdatePatientDialogComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent,
-    UpdateDialogComponent
+    UpdateDialogComponent,
+    UpdatePatientDialogComponent
   ],
   imports: [
     BrowserModule,

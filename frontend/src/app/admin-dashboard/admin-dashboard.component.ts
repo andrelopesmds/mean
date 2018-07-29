@@ -4,7 +4,6 @@ import { MainService} from '../main.service';
 import { MatTableDataSource, MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
-import { copyObj } from '@angular/animations/browser/src/util';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,7 +15,7 @@ export class AdminDashboardComponent implements OnInit {
   newUser: User = new User();
   users: User[] = [];
 
-  displayedColumns: string[] = ['name', 'password', 'role', 'cpf', 'phone', 'button-update', 'button-remove'];
+  displayedColumns: string[] = ['username', 'name', 'password', 'role', 'cpf', 'phone', 'button-update', 'button-remove'];
   dataSource = new MatTableDataSource<User>();
 
   constructor(
@@ -51,12 +50,12 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   insertUser() {
-    if(this.newUser.username && this.newUser.password && this.newUser.role && this.newUser.cpf && this.newUser.phone) {
+    if(this.newUser.username && this.newUser.name && this.newUser.password && this.newUser.role && this.newUser.cpf && this.newUser.phone) {
       this.mainService.insertUser(this.newUser).subscribe(
         data => {
           if(data.status) {
             this.listUsers();
-            alert(this.newUser.username + " foi cadastrado com sucesso!");
+            alert(this.newUser.name + " foi cadastrado com sucesso!");
           } else {
             alert("Houve problema de conexão ao efetuar cafastro, entre em contato com o administrador.");  
           }
@@ -83,7 +82,7 @@ export class AdminDashboardComponent implements OnInit {
          data => {
            if(data.status) {
              this.listUsers();
-             alert(result.user.username + " foi atualizado.");
+             alert(result.user.name + " foi atualizado.");
            }
          },
          erro => {
@@ -99,7 +98,7 @@ export class AdminDashboardComponent implements OnInit {
   deleteConfirmation(user) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: 'Tem certeza que deseja excluir ' + user.username + '?',
+        message: 'Tem certeza que deseja excluir ' + user.name + '?',
         buttonLabel: 'Excluir'
       }
     });
@@ -116,7 +115,7 @@ export class AdminDashboardComponent implements OnInit {
       data => {
         if(data.status) {
           this.listUsers();
-          alert(user.username + " foi removido com sucesso");
+          alert(user.name + " foi removido com sucesso");
         } else {
           alert("Houve problema de conexão ao tentar remover o usuário ou este não foi encontrado, entre em contato com o administrador.");
         }

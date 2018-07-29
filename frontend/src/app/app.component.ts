@@ -17,6 +17,7 @@ export class AppComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
+    this.user.role = 'assistente';
   }
 
   login() {
@@ -24,7 +25,6 @@ export class AppComponent implements OnInit{
       this.mainService.login(this.user).subscribe(
         data => {
           this.user = data;
-          console.log(data);
           if(this.user.role != 'admin' && this.user.role != 'assistente' && this.user.role != 'medico') {
             alert("Usuário não encontrado ou sem permissão de acesso");
           }
