@@ -4,6 +4,7 @@ import { MainService} from '../main.service';
 import { MatTableDataSource, MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { Utils } from '../utils/utils';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,6 +15,7 @@ export class AdminDashboardComponent implements OnInit {
 
   newUser: User = new User();
   users: User[] = [];
+  utils: Utils = new Utils();
 
   displayedColumns: string[] = ['username', 'name', 'password', 'role', 'cpf', 'phone', 'button-update', 'button-remove'];
   dataSource = new MatTableDataSource<User>();
@@ -72,12 +74,12 @@ export class AdminDashboardComponent implements OnInit {
   updateDialog(user) {
     const dialogRef = this.dialog.open(UpdateDialogComponent, {
       data: {
-        user: this.makeCopy(user)
+        user: this.utils.makeCopy(user)
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result && result.response && !this.isEqual(result.user, user)) {
+      if(result && result.response && !this.utils.isEqual(result.user, user)) {
         this.mainService.updateUser(result.user).subscribe(
          data => {
            if(data.status) {
@@ -125,18 +127,6 @@ export class AdminDashboardComponent implements OnInit {
         alert("Houve problema de conexão ao tentar remover o usuário, entre em contato com o administrador.");
       }
     );
-  }
-
-  makeCopy(obj) {
-    return (JSON.parse(JSON.stringify(obj)));
-  }
-
-  isEqual(obj1, obj2) {
-    if(JSON.stringify(obj1) == JSON.stringify(obj2)) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
 }
