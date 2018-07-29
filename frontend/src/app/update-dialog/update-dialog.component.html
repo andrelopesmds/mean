@@ -1,0 +1,29 @@
+<div>
+  <h1>
+    {{ user.username }}
+  </h1>
+</div>
+<div>
+  <form class="update-user-form">
+    <mat-form-field>
+      <input matInput [(ngModel)]="user.password" name="password" placeholder="Senha" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(value)]="user.role" placeholeder="Tipo">
+        <mat-option value="admin">Administrador</mat-option>
+        <mat-option value="assistente">Assistente</mat-option>
+        <mat-option value="medico">Médico</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="user.cpf" name="cpf" placeholder="CPF" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="user.phone" name="phone" placeholder="Telefone" required>
+    </mat-form-field>
+  </form>
+</div>
+<div>
+  <button type="button" mat-raised-button color="primary" (click)="dialogRef.close({response: false})">Cancelar</button>
+  <button type="button" mat-raised-button color="warn" (click)="dialogRef.close({response: true, user: user})">Atualizar</button>
+</div>
