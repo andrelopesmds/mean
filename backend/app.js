@@ -32,8 +32,11 @@ app.get('/api/login', function(req, res) {
 
 app.get('/api/users', function(req, res) {
     var obj;
-
-    controlDB.getUsers(function(data) {
+    var role;
+    if(req.query && req.query && req.query.role) {
+        role = req.query.role
+    }
+    controlDB.getUsers(role, function(data) {
        obj = data;
        res.setHeader('Content-Type', 'application/json');
        res.send(obj);
@@ -177,5 +180,57 @@ app.delete('/api/patients', function(req, res) {
     } 
 })
 
+app.get('/api/meetings', function(req, res) {
+    var obj;
+
+    controlDB.getMeetings(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
+
+
+
+app.post('/api/meetings', function(req, res) {
+    var response;
+    var obj = req.body;
+    if(obj.doctor && obj.doctor.name && obj.doctor.cpf && obj.patient && obj.patient.name && obj.patient.cpf && obj.date && obj.hour) {
+        controlDB.insertMeeting(obj.doctor.name, obj.doctor.cpf, obj.patient.name, obj.patient.cpf, obj.date, obj.hour, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+app.delete('/api/meetings', function(req, res) {
+    var response;
+    var obj = req.query;
+
+    if(obj && obj.doctorCpf && obj.patientCpf && obj.date && obj.hour) {
+        controlDB.deleteMeeting(obj.doctorCpf, obj.patientCpf, obj.date, obj.hour, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    } 
+})
 
 app.listen(8080, 'localhost')

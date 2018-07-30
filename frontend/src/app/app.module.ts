@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { MatCheckboxModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatTabsModule, MatSelectModule, MatTableModule, MatIconModule, MatDialogModule } from '@angular/material';
+import { MatCheckboxModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatTabsModule, MatSelectModule, MatTableModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
@@ -14,6 +14,7 @@ import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 import { AssistantDashboardComponent } from './assistant-dashboard/assistant-dashboard.component';
 import { PatientsComponent } from './assistant-dashboard/patients/patients.component';
 import { UpdatePatientDialogComponent } from './assistant-dashboard/update-patient-dialog/update-patient-dialog.component';
+import { ScheduleComponent } from './assistant-dashboard/schedule/schedule.component';
 
 
 
@@ -25,7 +26,8 @@ import { UpdatePatientDialogComponent } from './assistant-dashboard/update-patie
     UpdateDialogComponent,
     AssistantDashboardComponent,
     PatientsComponent,
-    UpdatePatientDialogComponent
+    UpdatePatientDialogComponent,
+    ScheduleComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent,
@@ -45,7 +47,9 @@ import { UpdatePatientDialogComponent } from './assistant-dashboard/update-patie
     MatSelectModule,
     MatTableModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

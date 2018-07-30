@@ -4,6 +4,7 @@ import { MainService } from '../../main.service';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import { UpdatePatientDialogComponent } from '../update-patient-dialog/update-patient-dialog.component';
+import { Utils } from '../../utils/utils';
 
 @Component({
   selector: 'app-patients',
@@ -12,8 +13,9 @@ import { UpdatePatientDialogComponent } from '../update-patient-dialog/update-pa
 })
 export class PatientsComponent implements OnInit {
 
-  newPatient: Patient = new Patient;
+  newPatient: Patient = new Patient();
   patients: Patient[] = [];
+  utils: Utils = new Utils();
 
   displayedColumns: string[] = ['name', 'age', 'cpf', 'phone', 'button-update', 'button-remove'];
   dataSource = new MatTableDataSource<Patient>();
@@ -29,7 +31,7 @@ export class PatientsComponent implements OnInit {
 
   listPatients() {
     this.patients = [];
-    this.mainService.listPacients().subscribe(
+    this.mainService.listPatients().subscribe(
       data => {
         if (data.length > 0) {
           data.forEach(patient => {
@@ -71,12 +73,12 @@ export class PatientsComponent implements OnInit {
   updatePatientDialog(patient) {
     const dialogRef = this.dialog.open(UpdatePatientDialogComponent, {
       data: {
-        patient: this.makeCopy(patient)
+        patient: this.utils.makeCopy(patient)
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result && result.response && !this.isEqual(result.patient, patient)) {
+      if(result && result.response && !this.utils.isEqual(result.patient, patient)) {
         this.mainService.updatePatient(result.patient).subscribe(
          data => {
            if(data.status) {
@@ -125,18 +127,6 @@ export class PatientsComponent implements OnInit {
         alert("Houve problema de conexão ao tentar remover o usuário, entre em contato com o administrador.");
       }
     );
-  }
-
-  makeCopy(obj) {
-    return (JSON.parse(JSON.stringify(obj)));
-  }
-
-  isEqual(obj1, obj2) {
-    if(JSON.stringify(obj1) == JSON.stringify(obj2)) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
 }

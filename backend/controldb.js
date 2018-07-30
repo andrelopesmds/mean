@@ -5,6 +5,7 @@ var dbName = "clinica";
 var collectionName1 = "users";
 var collectionName2 = "medicos";
 var collectionName3 = "patients";
+var collectionName4 = "meetings";
 var dbo;
 
 exports.createdb = function() {
@@ -32,6 +33,12 @@ exports.createdb = function() {
 
             console.log("Created collection " + collectionName3 + "!");
         });
+        dbo.createCollection(collectionName4, function(err, res) {
+            if (err)
+                throw err;
+
+            console.log("Created collection " + collectionName4 + "!");
+        });
     });
 }
 
@@ -45,8 +52,11 @@ exports.login = function(username, password, callback) {
     });
 }
 
-exports.getUsers = function(callback) {
+exports.getUsers = function(role, callback) {
     var filter = { active: true };
+    if(role) {
+        filter.role = role;
+    }
     var proj = { projection: { _id: 0 }};
     dbo.collection(collectionName1).find(filter, proj).toArray(function(err, res) {
         if (err)
@@ -133,6 +143,38 @@ exports.deletePatient = function(cpf, callback) {
     var filter = { cpf: cpf };
     var obj = { $set: { active: false }};
     dbo.collection(collectionName3).updateOne(filter, obj, function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.getMeetings = function(callback) {
+    var filter = { active: true };
+    var proj = { projection: { _id : 0 } };
+    dbo.collection(collectionName4).find(filter, proj).toArray(function(err, res) {
+        if (err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.insertMeeting = function(doctorName, doctorCpf, patientName, patientCpf, date, hour, callback) {
+    dbo.collection(collectionName4).insertOne({ doctorName: doctorName, doctorCpf: doctorCpf, patientName: patientName, patientCpf: patientCpf, date: date, hour: hour, active: true}, function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+
+exports.deleteMeeting = function(doctorCpf, patientCpf, date, hour, callback) {
+    var filter = { doctorCpf: doctorCpf, patientCpf: patientCpf, date: date, hour: hour };
+    var obj = { $set: { active: false }};
+    dbo.collection(collectionName4).updateOne(filter, obj, function(err, res) {
         if(err)
             throw err;
 
