@@ -31,7 +31,7 @@ export class PatientsComponent implements OnInit {
 
   listPatients() {
     this.patients = [];
-    this.mainService.listPacients().subscribe(
+    this.mainService.listPatients().subscribe(
       data => {
         if (data.length > 0) {
           data.forEach(patient => {

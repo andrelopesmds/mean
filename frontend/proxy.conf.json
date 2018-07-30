@@ -10,5 +10,9 @@
     "/api/users": {
       "target": "http://localhost:8080",
       "secure": false
+    },
+    "/api/meetings": {
+      "target": "http://localhost:8080",
+      "secure": false
     }
 }

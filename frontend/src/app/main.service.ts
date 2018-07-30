@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './models/user';
 import { Patient } from './models/patient';
+import { Meeting } from './models/metting';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class MainService {
     return this.http.delete<any>('api/users?username='+ user.username, this.httpOptions);
   }
 
-  listPacients() {
+  listPatients() {
     return this.http.get<Array<Patient>>('api/patients');
   }
 
@@ -50,6 +51,22 @@ export class MainService {
 
   removePatient(patient: Patient) {
     return this.http.delete<any>('api/patients?cpf=' + patient.cpf, this.httpOptions);
+  }
+
+  listDoctors() {
+    return this.http.get<Array<User>>('api/users?role=medico');
+  }
+
+  listMeetings() {
+    return this.http.get<Array<any>>('api/meetings');
+  }
+
+  insertMeeting(meeting: Meeting) {
+    return this.http.post<any>('api/meetings', meeting, this.httpOptions);
+  }
+
+  removeMeeting(meeting: Meeting){
+    return this.http.delete<any>('api/meetings?doctorCpf=' + meeting.doctor.cpf + '&patientCpf=' + meeting.patient.cpf + '&date=' + meeting.date + '&hour=' + meeting.hour);
   }
 
 }
