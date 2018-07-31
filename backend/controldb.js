@@ -3,7 +3,6 @@ var url = "mongodb://localhost:27017/";
 
 var dbName = "clinica";
 var collectionName1 = "users";
-var collectionName2 = "medicos";
 var collectionName3 = "patients";
 var collectionName4 = "meetings";
 var dbo;
@@ -20,12 +19,6 @@ exports.createdb = function() {
                 throw err;
 
             console.log("Created collection " + collectionName1 + "!");
-        });
-        dbo.createCollection(collectionName2, function(err, res) {
-            if (err)
-                throw err;
-
-            console.log("Created collection " + collectionName2 + "!");
         });
         dbo.createCollection(collectionName3, function(err, res) {
             if (err)
