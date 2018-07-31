@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
   }
 
   login() {
-    if(this.user.username && this.user.password) {
+    if(this.user.cpf && this.user.password) {
       this.mainService.login(this.user).subscribe(
         data => {
           this.user = data;

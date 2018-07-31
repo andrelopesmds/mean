@@ -18,7 +18,7 @@ export class MainService {
   constructor(private http: HttpClient) { }
 
   login(user: User) {
-    return this.http.get<User>('/api/login?username='+ user.username + '&password=' + user.password);
+    return this.http.get<User>('/api/login?cpf='+ user.cpf + '&password=' + user.password);
   }
 
   listUsers() {
@@ -34,7 +34,7 @@ export class MainService {
   }
 
   removeUser(user: User) {
-    return this.http.delete<any>('api/users?username='+ user.username, this.httpOptions);
+    return this.http.delete<any>('api/users?cpf='+ user.cpf, this.httpOptions);
   }
 
   listPatients() {

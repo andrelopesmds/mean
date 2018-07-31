@@ -1,6 +1,6 @@
 <div>
     <h1>
-      {{ patient.name }}
+      CPF: {{ patient.cpf }}
     </h1>
   </div>
   <div>
@@ -10,9 +10,6 @@
           </mat-form-field>
       <mat-form-field>
         <input matInput [(ngModel)]="patient.age" name="age" placeholder="Idade" required>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput [(ngModel)]="patient.cpf" name="cpf" placeholder="CPF" required disabled>
       </mat-form-field>
       <mat-form-field>
         <input matInput [(ngModel)]="patient.phone" name="phone" placeholder="Telefone" required>

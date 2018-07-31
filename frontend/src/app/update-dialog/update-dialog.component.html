@@ -1,7 +1,5 @@
 <div>
-  <h1>
-    {{ user.username }}
-  </h1>
+  <h1>{{ user.cpf }}</h1>
 </div>
 <div>
   <form class="update-user-form">
@@ -17,9 +15,6 @@
         <mat-option value="assistente">Assistente</mat-option>
         <mat-option value="medico">Médico</mat-option>
       </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [(ngModel)]="user.cpf" name="cpf" placeholder="CPF" required>
     </mat-form-field>
     <mat-form-field>
       <input matInput [(ngModel)]="user.phone" name="phone" placeholder="Telefone" required>

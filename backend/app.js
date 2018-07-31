@@ -11,8 +11,8 @@ app.use(bodyParser.json())
 app.get('/api/login', function(req, res) {
     var obj = req.query;
 
-    if(obj && obj.username && obj.password) {
-        controlDB.login(obj.username, obj.password, function(data) {
+    if(obj && obj.cpf && obj.password) {
+        controlDB.login(obj.cpf, obj.password, function(data) {
             if(data[0] && data[0].role) {
                 obj.role = data[0].role;
             } else {
@@ -47,8 +47,8 @@ app.post('/api/users', function(req, res) {
     var response;
     var obj = req.body;
 
-    if(obj.username && obj.name && obj.password && obj.role && obj.cpf && obj.phone) {
-        controlDB.insertUser(obj.username, obj.name, obj.password, obj.role, obj.cpf, obj.phone, function(data) {
+    if(obj.name && obj.password && obj.role && obj.cpf && obj.phone) {
+        controlDB.insertUser(obj.name, obj.password, obj.role, obj.cpf, obj.phone, function(data) {
             if(data && data.result && data.result.ok == 1) {
                 response = true;
             } else {
@@ -68,8 +68,8 @@ app.put('/api/users', function(req, res) {
     var response;
     var obj = req.body;
 
-    if(obj.username, obj.name, obj.password, obj.role, obj.cpf, obj.phone) {
-        controlDB.updateUser(obj.username, obj.name, obj.password, obj.role, obj.cpf, obj.phone, function(data) {
+    if(obj.name, obj.password, obj.role, obj.cpf, obj.phone) {
+        controlDB.updateUser(obj.name, obj.password, obj.role, obj.cpf, obj.phone, function(data) {
             if(data && data.result && data.result.ok == 1) {
                 response = true;
             } else {
@@ -89,8 +89,8 @@ app.delete('/api/users', function(req, res) {
     var response;
     var obj = req.query;
 
-    if(obj && obj.username) {
-        controlDB.deleteUser(obj.username, function(data) {
+    if(obj && obj.cpf) {
+        controlDB.deleteUser(obj.cpf, function(data) {
             if(data && data.result && data.result.ok == 1) {
                 response = true;
             } else {

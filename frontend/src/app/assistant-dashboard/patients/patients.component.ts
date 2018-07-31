@@ -17,7 +17,7 @@ export class PatientsComponent implements OnInit {
   patients: Patient[] = [];
   utils: Utils = new Utils();
 
-  displayedColumns: string[] = ['name', 'age', 'cpf', 'phone', 'button-update', 'button-remove'];
+  displayedColumns: string[] = ['cpf', 'name', 'age', 'phone', 'button-update', 'button-remove'];
   dataSource = new MatTableDataSource<Patient>();
 
   constructor(
@@ -58,7 +58,7 @@ export class PatientsComponent implements OnInit {
             this.listPatients();
             alert(this.newPatient.name + " foi cadastrado com sucesso!");
           } else {
-            alert("Houve problema ao efetuar cafastro, entre em contato com o administrador.");
+            alert("Houve problema ao efetuar cafastro, verfique se o cpf já está cadastrado ou entre em contato com o administrador.");  
           }
         },
         erro => {

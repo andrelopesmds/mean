@@ -42,9 +42,9 @@ exports.createdb = function() {
     });
 }
 
-exports.login = function(username, password, callback) {
+exports.login = function(cpf, password, callback) {
 
-    dbo.collection(collectionName1).find({ username: username, password: password, active: true }).toArray(function(err, res) {
+    dbo.collection(collectionName1).find({ cpf: cpf, password: password, active: true }).toArray(function(err, res) {
         if (err)
             throw err;
 
@@ -66,22 +66,21 @@ exports.getUsers = function(role, callback) {
     });
 }
 
-exports.insertUser = function(username, name, password, role, cpf, phone, callback) {
-    dbo.collection(collectionName1).insertOne({ username: username, name: name, password: password, role: role, cpf: cpf, phone: phone, active: true}, function(err, res) {
+exports.insertUser = function(name, password, role, cpf, phone, callback) {
+    dbo.collection(collectionName1).insertOne({ name: name, password: password, role: role, cpf: cpf, phone: phone, active: true}, function(err, res) {
         if(err)
-            throw err;
+            console.log("Erro ao tentar inserir usuário no banco. Cpf: " + cpf);
 
         callback(res);
     });
 }
 
-exports.updateUser = function(username, name, password, role, cpf, phone, callback) {
-    var filter = { username: username };
+exports.updateUser = function(name, password, role, cpf, phone, callback) {
+    var filter = { cpf: cpf };
     var obj = { $set: {
         name: name,
         password: password,
         role: role,
-        cpf: cpf,
         phone: phone
     }};
     dbo.collection(collectionName1).updateOne(filter, obj, function(err, res){
@@ -92,8 +91,8 @@ exports.updateUser = function(username, name, password, role, cpf, phone, callba
     });
 }
 
-exports.deleteUser = function(username, callback) {
-    var filter = { username: username };
+exports.deleteUser = function(cpf, callback) {
+    var filter = { cpf: cpf };
     var obj = { $set: { active: false }};
     dbo.collection(collectionName1).updateOne(filter, obj, function(err, res) {
         if(err)
@@ -118,7 +117,7 @@ exports.getPatients = function(callback) {
 exports.insertPatient = function(name, age, cpf, phone, callback) {
     dbo.collection(collectionName3).insertOne({ name: name, age: age, cpf: cpf, phone: phone, active: true}, function(err, res) {
         if(err)
-            throw err;
+            console.log("Erro ao tentar inserir paciente no banco. Cpf: " + cpf);
 
         callback(res);
     });

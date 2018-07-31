@@ -17,7 +17,7 @@ export class AdminDashboardComponent implements OnInit {
   users: User[] = [];
   utils: Utils = new Utils();
 
-  displayedColumns: string[] = ['username', 'name', 'password', 'role', 'cpf', 'phone', 'button-update', 'button-remove'];
+  displayedColumns: string[] = [ 'cpf', 'name', 'password', 'role', 'phone', 'button-update', 'button-remove'];
   dataSource = new MatTableDataSource<User>();
 
   constructor(
@@ -52,14 +52,14 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   insertUser() {
-    if(this.newUser.username && this.newUser.name && this.newUser.password && this.newUser.role && this.newUser.cpf && this.newUser.phone) {
+    if(this.newUser.name && this.newUser.password && this.newUser.role && this.newUser.cpf && this.newUser.phone) {
       this.mainService.insertUser(this.newUser).subscribe(
         data => {
           if(data.status) {
             this.listUsers();
             alert(this.newUser.name + " foi cadastrado com sucesso!");
           } else {
-            alert("Houve problema de conexão ao efetuar cafastro, entre em contato com o administrador.");  
+            alert("Houve problema ao efetuar cafastro, verfique se o cpf já está cadastrado ou entre em contato com o administrador.");  
           }
         },
         erro => {
