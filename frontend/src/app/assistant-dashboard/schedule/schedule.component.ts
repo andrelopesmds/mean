@@ -116,7 +116,7 @@ export class ScheduleComponent implements OnInit {
             this.listMeetings();
             alert("Consulta de " + this.newMeeting.patient.name + " com o Dr. " + this.newMeeting.doctor.name + " agendada com sucesso!"); 
           } else {
-            alert("Houve problema ao efetuar cafastro, entre em contato com o administrador.");    
+            alert("Houve problema ao efetuar cafastro, verifique a disponibilidade deste horário e data, entre em contato com o administrador.");    
           }
         },
         erro => {
