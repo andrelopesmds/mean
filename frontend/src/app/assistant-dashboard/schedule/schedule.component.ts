@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { Patient } from '../../models/patient';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { Subscriber, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-schedule',
@@ -21,6 +22,8 @@ export class ScheduleComponent implements OnInit {
   displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'hour', 'button-remove'];
   dataSource = new MatTableDataSource<Meeting>();
 
+  subscription: Subscription;
+
   constructor(
     public dialog: MatDialog,
     private mainService: MainService
@@ -30,6 +33,7 @@ export class ScheduleComponent implements OnInit {
     this.listDoctors();
     this.listPatients();
     this.listMeetings();
+    this.subscribeToUpdates();
   }
 
   listDoctors() {
@@ -156,4 +160,12 @@ export class ScheduleComponent implements OnInit {
     );
   }
 
+  subscribeToUpdates() {
+    this.subscription = this.mainService.patientsUpdates().subscribe(data => {
+      if(data) {
+        this.listPatients();
+      }
+    });
+  }
+  
 }

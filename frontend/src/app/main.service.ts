@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './models/user';
 import { Patient } from './models/patient';
 import { Meeting } from './models/metting';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class MainService {
       'Content-Type': 'application/json'
     })
   };
+
+  private subject = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
@@ -67,6 +70,14 @@ export class MainService {
 
   removeMeeting(meeting: Meeting){
     return this.http.delete<any>('api/meetings?doctorCpf=' + meeting.doctor.cpf + '&patientCpf=' + meeting.patient.cpf + '&date=' + meeting.date + '&hour=' + meeting.hour);
+  }
+
+  callScheduleToUpdatePatients(update: boolean) {
+    this.subject.next(update);
+  }
+
+  patientsUpdates(): Observable<any> {
+    return this.subject.asObservable();
   }
 
 }
