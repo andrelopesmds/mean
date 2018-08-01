@@ -5,6 +5,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import { UpdatePatientDialogComponent } from '../update-patient-dialog/update-patient-dialog.component';
 import { Utils } from '../../utils/utils';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-patients',
@@ -56,6 +57,7 @@ export class PatientsComponent implements OnInit {
         data => {
           if (data.status) {
             this.listPatients();
+            this.mainService.callScheduleToUpdatePatients(true);
             alert(this.newPatient.name + " foi cadastrado com sucesso!");
           } else {
             alert("Houve problema ao efetuar cafastro, verfique se o cpf já está cadastrado ou entre em contato com o administrador.");  
@@ -83,6 +85,7 @@ export class PatientsComponent implements OnInit {
          data => {
            if(data.status) {
              this.listPatients();
+             this.mainService.callScheduleToUpdatePatients(true);
              alert(result.patient.name + " foi atualizado.");
            }
          },
@@ -117,6 +120,7 @@ export class PatientsComponent implements OnInit {
       data => {
         if(data.status) {
           this.listPatients();
+          this.mainService.callScheduleToUpdatePatients(true);
           alert(patient.name + " foi removido com sucesso");
         } else {
           alert("Este paciente não foi encontrado, entre em contato com o administrador.");

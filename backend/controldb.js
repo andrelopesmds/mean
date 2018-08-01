@@ -156,7 +156,7 @@ exports.getMeetings = function(callback) {
 exports.insertMeeting = function(doctorName, doctorCpf, patientName, patientCpf, date, hour, callback) {
     dbo.collection(collectionName4).insertOne({ doctorName: doctorName, doctorCpf: doctorCpf, patientName: patientName, patientCpf: patientCpf, date: date, hour: hour, active: true}, function(err, res) {
         if(err)
-            throw err;
+            console.log("Erro ao tentar inserir agendamento. { doctorCpf: " + doctorCpf + ", date: " + date + ", hour: " + hour + " }");
 
         callback(res);
     });
