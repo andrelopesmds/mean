@@ -14,5 +14,9 @@
     "/api/meetings": {
       "target": "http://localhost:8080",
       "secure": false
+    },
+    "/api/medicines": {
+      "target": "http://localhost:8080",
+      "secure": false
     }
 }

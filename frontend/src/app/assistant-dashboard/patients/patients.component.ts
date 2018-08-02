@@ -50,7 +50,6 @@ export class PatientsComponent implements OnInit {
     )
   }
 
-
   insertPatient() {
     if (this.newPatient.name && this.newPatient.age && this.newPatient.cpf && this.newPatient.phone) {
       this.mainService.insertPatient(this.newPatient).subscribe(

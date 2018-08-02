@@ -1,10 +1,11 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 
-var dbName = "clinica";
-var collectionName1 = "users";
-var collectionName3 = "patients";
-var collectionName4 = "meetings";
+var dbName = 'clinica';
+var collectionName1 = 'users';
+var collectionName2 = 'medicines';
+var collectionName3 = 'patients';
+var collectionName4 = 'meetings';
 var dbo;
 
 exports.createdb = function() {
@@ -12,25 +13,31 @@ exports.createdb = function() {
         if (err)
             throw err;
 
-        console.log("Created/connected to clinica database");
+        console.log('Created/connected to clinica database');
         dbo = db.db(dbName);
         dbo.createCollection(collectionName1, function(err, res) {
             if (err)
                 throw err;
 
-            console.log("Created collection " + collectionName1 + "!");
+            console.log('Created collection ' + collectionName1 + '!');
+        });
+        dbo.createCollection(collectionName2, function(err, res) {
+            if (err)
+                throw err;
+
+            console.log('Created collection ' + collectionName2 + '!');
         });
         dbo.createCollection(collectionName3, function(err, res) {
             if (err)
                 throw err;
 
-            console.log("Created collection " + collectionName3 + "!");
+            console.log('Created collection ' + collectionName3 + '!');
         });
         dbo.createCollection(collectionName4, function(err, res) {
             if (err)
                 throw err;
 
-            console.log("Created collection " + collectionName4 + "!");
+            console.log('Created collection ' + collectionName4 + '!');
         });
     });
 }
@@ -88,6 +95,52 @@ exports.deleteUser = function(cpf, callback) {
     var filter = { cpf: cpf };
     var obj = { $set: { active: false }};
     dbo.collection(collectionName1).updateOne(filter, obj, function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.getMedicines = function(callback) {
+    var filter = { active: true };
+    var proj = { projection: { _id: 0 } };
+    dbo.collection(collectionName2).find(filter, proj).toArray(function(err, res) {
+        if(err)
+            throw err;
+
+        callback(res);
+    })
+}
+
+exports.insertMedicine = function(genericName, factoryName, manufacturer, callback) {
+    dbo.collection(collectionName2).insertOne({ genericName: genericName, factoryName: factoryName, manufacturer: manufacturer, active: true}, function(err, res) {
+        if(err)
+            console.log('Erro ao tentar inserir medicamento. genericName: ' + genericName);
+
+        callback(res);
+    });
+}
+
+exports.updateMedicine = function(genericName, factoryName, manufacturer, callback) {
+    var filter = { factoryName: factoryName };
+    var obj = { $set: {
+        genericName: genericName,
+        manufacturer: manufacturer
+    }};
+    dbo.collection(collectionName2).updateOne(filter, obj, function(err, res){
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+exports.deleteMedicine = function(factoryName, callback) {
+    var filter = { factoryName: factoryName };
+    var obj = { $set: { active: false }};
+
+    dbo.collection(collectionName2).updateOne(filter, obj, function(err, res) {
         if(err)
             throw err;
 
