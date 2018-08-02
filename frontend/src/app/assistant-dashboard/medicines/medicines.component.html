@@ -1,0 +1,56 @@
+<mat-tab-group>
+    <mat-tab label="Listar">
+        <div class="mat-table">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+              <ng-container matColumnDef="genericName">
+                <th mat-header-cell *matHeaderCellDef>Nome Genérico</th>
+                <td mat-cell *matCellDef="let element"> {{element.genericName}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="factoryName">
+                <th mat-header-cell *matHeaderCellDef>Nome de fábrica</th>
+                <td mat-cell *matCellDef="let element"> {{element.factoryName}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="manufacturer">
+                <th mat-header-cell *matHeaderCellDef>Fabricante</th>
+                <td mat-cell *matCellDef="let element"> {{element.manufacturer}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="button-update">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <button type="button" mat-raised-button color="accent" (click)="updateMedicineDialog(element)">Atualizar</button>
+                </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="button-remove">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <button type="button" mat-raised-button color="warn" (click)="deleteConfirmation(element)">Remover</button>
+                </td>
+              </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>      
+    </mat-tab>
+    <mat-tab label="Cadastrar">
+  
+      <form class="new-medicine-form">
+        <mat-form-field>
+          <input matInput [(ngModel)]="newMedicine.genericName" name="genericName" placeholder="Nome genérico" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newMedicine.factoryName" name="factoryName" placeholder="Nome de fábrica" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="newMedicine.manufacturer" name="manufacturer" placeholder="Fabricante" required>
+        </mat-form-field>
+        <button type="button" mat-raised-button color="primary" (click)="insertMedicine()">Cadastrar</button>
+      </form>
+  
+    </mat-tab>
+  </mat-tab-group>

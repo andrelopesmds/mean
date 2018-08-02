@@ -4,6 +4,7 @@ import { User } from './models/user';
 import { Patient } from './models/patient';
 import { Meeting } from './models/metting';
 import { Subject, Observable } from 'rxjs';
+import { Medicine } from './models/medicine';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,22 @@ export class MainService {
 
   patientsUpdates(): Observable<any> {
     return this.subject.asObservable();
+  }
+
+  listMedicines() {
+    return this.http.get<Array<Medicine>>('api/medicines');
+  }
+
+  insertMedicine(medicine: Medicine) {
+    return this.http.post<any>('api/medicines', medicine, this.httpOptions);
+  }
+
+  updateMedicine(medicine: Medicine) {
+    return this.http.put<any>('api/medicines', medicine, this.httpOptions);
+  }
+
+  removeMedicine(medicine: Medicine) {
+    return this.http.delete<any>('api/medicines?factoryName=' + medicine.factoryName);
   }
 
 }

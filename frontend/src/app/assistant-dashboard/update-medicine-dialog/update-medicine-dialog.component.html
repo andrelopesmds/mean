@@ -1,0 +1,19 @@
+<div>
+    <h1>
+      Nome de fábrica: {{ medicine.factoryName }}
+    </h1>
+  </div>
+  <div>
+    <form class="update-medicine-form">
+        <mat-form-field>
+            <input matInput [(ngModel)]="medicine.genericName" name="genericName" placeholder="Nome genérico" required>
+          </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="medicine.manufacturer" name="manufacturer" placeholder="Fabricante" required>
+      </mat-form-field>
+    </form>
+  </div>
+  <div>
+    <button type="button" mat-raised-button color="primary" (click)="dialogRef.close({response: false})">Cancelar</button>
+    <button type="button" mat-raised-button color="warn" (click)="dialogRef.close({response: true, medicine: medicine})">Atualizar</button>
+  </div>

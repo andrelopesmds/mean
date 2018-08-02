@@ -15,12 +15,14 @@ import { Subscriber, Subscription } from 'rxjs';
 export class ScheduleComponent implements OnInit {
 
   meetings: Meeting[] = [];
+  history: Meeting[] = [];
   doctors: User[] = [];
   patients: Patient[] = [];
   newMeeting: Meeting = new Meeting();
 
   displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'hour', 'button-remove'];
   dataSource = new MatTableDataSource<Meeting>();
+  dataSourceHistory = new MatTableDataSource<Meeting>();
 
   subscription: Subscription;
 
@@ -77,6 +79,7 @@ export class ScheduleComponent implements OnInit {
 
   listMeetings() {
     this.meetings = [];
+    this.history = [];
     this.mainService.listMeetings().subscribe(
       data => {
         if (data.length > 0) {
@@ -90,12 +93,18 @@ export class ScheduleComponent implements OnInit {
             temp.patient.cpf = meeting.patientCpf;
             temp.date = meeting.date;
             temp.hour = meeting.hour;
-            this.meetings.push(temp);
+
+            if(new Date(temp.date) > new Date()){
+              this.meetings.push(temp);
+            } else {
+              this.history.push(temp);
+            }
           });
         } else {
           alert("Não há consultas cadastradas.");
         }
         this.dataSource.data = this.meetings;
+        this.dataSourceHistory.data = this.history;
       },
       erro => {
         console.log(erro);

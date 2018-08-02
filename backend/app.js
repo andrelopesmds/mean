@@ -106,6 +106,81 @@ app.delete('/api/users', function(req, res) {
     } 
 })
 
+
+app.get('/api/medicines', function(req, res) {
+    var obj;
+
+    controlDB.getMedicines(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
+
+app.post('/api/medicines', function (req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.genericName && obj.factoryName && obj.manufacturer) {
+        controlDB.insertMedicine(obj.genericName, obj.factoryName, obj.manufacturer, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+
+app.put('/api/medicines', function(req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.genericName, obj.factoryName, obj.manufacturer) {
+        controlDB.updateMedicine(obj.genericName, obj.factoryName, obj.manufacturer, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+app.delete('/api/medicines', function(req, res) {
+    var response;
+    var obj = req.query;
+
+    if(obj && obj.factoryName) {
+        controlDB.deleteMedicine(obj.factoryName, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    } 
+})
+
 app.get('/api/patients', function(req, res) {
     var obj;
 
@@ -232,5 +307,6 @@ app.delete('/api/meetings', function(req, res) {
         res.send({'status': response});
     } 
 })
+
 
 app.listen(8080, 'localhost')
