@@ -287,6 +287,29 @@ app.post('/api/meetings', function(req, res) {
     }
 })
 
+
+app.put('/api/meetings', function(req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.doctor, obj.doctor.cpf, obj.patient, obj.patient.cpf, obj.oldDate, obj.newDate, obj.oldHour, obj.newHour) {
+        controlDB.updateMeeting(obj.doctor.cpf, obj.patient.cpf, obj.oldDate, obj.newDate, obj.oldHour, obj.newHour, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+
 app.delete('/api/meetings', function(req, res) {
     var response;
     var obj = req.query;

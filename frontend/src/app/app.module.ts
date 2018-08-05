@@ -17,6 +17,7 @@ import { UpdatePatientDialogComponent } from './assistant-dashboard/update-patie
 import { ScheduleComponent } from './assistant-dashboard/schedule/schedule.component';
 import { MedicinesComponent } from './assistant-dashboard/medicines/medicines.component';
 import { UpdateMedicineDialogComponent } from './assistant-dashboard/update-medicine-dialog/update-medicine-dialog.component';
+import { UpdateMeetingDialogComponent } from './assistant-dashboard/update-meeting-dialog/update-meeting-dialog.component';
 
 
 
@@ -31,13 +32,15 @@ import { UpdateMedicineDialogComponent } from './assistant-dashboard/update-medi
     UpdatePatientDialogComponent,
     ScheduleComponent,
     MedicinesComponent,
-    UpdateMedicineDialogComponent
+    UpdateMedicineDialogComponent,
+    UpdateMeetingDialogComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent,
     UpdateDialogComponent,
     UpdatePatientDialogComponent,
-    UpdateMedicineDialogComponent
+    UpdateMedicineDialogComponent,
+    UpdateMeetingDialogComponent
   ],
   imports: [
     BrowserModule,

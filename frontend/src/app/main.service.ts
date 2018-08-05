@@ -5,6 +5,7 @@ import { Patient } from './models/patient';
 import { Meeting } from './models/metting';
 import { Subject, Observable } from 'rxjs';
 import { Medicine } from './models/medicine';
+import { MeetingUpdate } from './models/meetingUpdate';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,10 @@ export class MainService {
 
   insertMeeting(meeting: Meeting) {
     return this.http.post<any>('api/meetings', meeting, this.httpOptions);
+  }
+
+  updateMeeting(meeting: MeetingUpdate) {
+    return this.http.put<any>('api/meetings', meeting, this.httpOptions);
   }
 
   removeMeeting(meeting: Meeting){

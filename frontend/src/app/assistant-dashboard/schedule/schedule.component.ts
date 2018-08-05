@@ -6,6 +6,9 @@ import { Patient } from '../../models/patient';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import { Subscriber, Subscription } from 'rxjs';
+import { UpdateMeetingDialogComponent } from '../update-meeting-dialog/update-meeting-dialog.component';
+import { Utils } from '../../utils/utils';
+import { MeetingUpdate } from '../../models/meetingUpdate';
 
 @Component({
   selector: 'app-schedule',
@@ -19,8 +22,9 @@ export class ScheduleComponent implements OnInit {
   doctors: User[] = [];
   patients: Patient[] = [];
   newMeeting: Meeting = new Meeting();
+  utils: Utils = new Utils();
 
-  displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'hour', 'button-remove'];
+  displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'hour', 'button-update', 'button-remove'];
   dataSource = new MatTableDataSource<Meeting>();
   dataSourceHistory = new MatTableDataSource<Meeting>();
 
@@ -135,6 +139,43 @@ export class ScheduleComponent implements OnInit {
     } else {
       alert("Todos os campos são obrigatórios.");
     }
+  }
+
+  updateMeetingDialog(meeting) {
+    const meetingUpdate = new MeetingUpdate();
+    meetingUpdate.doctor = meeting.doctor;
+    meetingUpdate.patient = meeting.patient;
+    meetingUpdate.oldDate = meeting.date;
+    meetingUpdate.oldHour = meeting.hour;
+
+    const dialogRef = this.dialog.open(UpdateMeetingDialogComponent, {
+      data: {
+        meeting: this.utils.makeCopy(meeting)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.response && !this.utils.isEqual(result.meeting, meeting)) {
+        meetingUpdate.newDate = result.meeting.date;
+        meetingUpdate.newHour = result.meeting.hour;
+        this.mainService.updateMeeting(meetingUpdate).subscribe(
+         data => {
+           if(data.status) {
+             this.listMeetings();
+             alert('A consulta do Dr. ' + result.meeting.doctor.name + 'com o(a) senhor(a)' + result.meeting.patient.name + ' foi atualizada.');
+           }
+         },
+         erro => {
+           console.log(erro);
+           alert('Houve um problema ao tentar reagendar a consulta. Entre em contato com o administrador.');
+         }
+        )
+      } else if(result && result.response) {
+        alert('Não houveram modificações para atualizar.');
+      }
+    });
+
+    
   }
 
   deleteConfirmation(meeting) {

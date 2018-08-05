@@ -215,6 +215,24 @@ exports.insertMeeting = function(doctorName, doctorCpf, patientName, patientCpf,
     });
 }
 
+exports.updateMeeting = function(doctorCpf, patientCpf, oldDate, newDate, oldHour, newHour, callback) {
+    var filter = { 
+        doctorCpf: doctorCpf,
+        patientCpf: patientCpf,
+        date: oldDate,
+        hour: oldHour
+    };
+    var obj = { $set: {
+        date: newDate,
+        hour: newHour
+    }};
+    dbo.collection(collectionName4).updateOne(filter, obj, function(err, res){
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
 
 exports.deleteMeeting = function(doctorCpf, patientCpf, date, hour, callback) {
     var filter = { doctorCpf: doctorCpf, patientCpf: patientCpf, date: date, hour: hour };
