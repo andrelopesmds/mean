@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    this.user.role = 'assistente';
+    this.user.role = 'medico';
   }
 
   login() {

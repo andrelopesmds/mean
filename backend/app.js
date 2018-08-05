@@ -13,8 +13,10 @@ app.get('/api/login', function(req, res) {
 
     if(obj && obj.cpf && obj.password) {
         controlDB.login(obj.cpf, obj.password, function(data) {
-            if(data[0] && data[0].role) {
+            if(data[0] && data[0].role && data[0].name) {
                 obj.role = data[0].role;
+                obj.name = data[0].name;
+                console.log(data[0].name);
             } else {
                 obj.role = '';
             }

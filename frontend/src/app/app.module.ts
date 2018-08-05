@@ -18,6 +18,8 @@ import { ScheduleComponent } from './assistant-dashboard/schedule/schedule.compo
 import { MedicinesComponent } from './assistant-dashboard/medicines/medicines.component';
 import { UpdateMedicineDialogComponent } from './assistant-dashboard/update-medicine-dialog/update-medicine-dialog.component';
 import { UpdateMeetingDialogComponent } from './assistant-dashboard/update-meeting-dialog/update-meeting-dialog.component';
+import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.component';
+import { PrescriptionDialogComponent } from './doctor-dashboard/prescription-dialog/prescription-dialog.component';
 
 
 
@@ -33,14 +35,17 @@ import { UpdateMeetingDialogComponent } from './assistant-dashboard/update-meeti
     ScheduleComponent,
     MedicinesComponent,
     UpdateMedicineDialogComponent,
-    UpdateMeetingDialogComponent
+    UpdateMeetingDialogComponent,
+    DoctorDashboardComponent,
+    PrescriptionDialogComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent,
     UpdateDialogComponent,
     UpdatePatientDialogComponent,
     UpdateMedicineDialogComponent,
-    UpdateMeetingDialogComponent
+    UpdateMeetingDialogComponent,
+    PrescriptionDialogComponent
   ],
   imports: [
     BrowserModule,
