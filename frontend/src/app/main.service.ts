@@ -6,6 +6,7 @@ import { Meeting } from './models/metting';
 import { Subject, Observable } from 'rxjs';
 import { Medicine } from './models/medicine';
 import { MeetingUpdate } from './models/meetingUpdate';
+import { Prescription } from './models/prescription';
 
 @Injectable({
   providedIn: 'root'
@@ -100,6 +101,10 @@ export class MainService {
 
   removeMedicine(medicine: Medicine) {
     return this.http.delete<any>('api/medicines?factoryName=' + medicine.factoryName);
+  }
+
+  insertPrescription(prescription: Prescription) {
+    return this.http.post<any>('api/prescriptions', prescription, this.httpOptions);
   }
 
 }

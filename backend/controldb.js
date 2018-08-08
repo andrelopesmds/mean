@@ -6,6 +6,7 @@ var collectionName1 = 'users';
 var collectionName2 = 'medicines';
 var collectionName3 = 'patients';
 var collectionName4 = 'meetings';
+var collectionName5 = 'prescriptions';
 var dbo;
 
 exports.createdb = function() {
@@ -244,3 +245,25 @@ exports.deleteMeeting = function(doctorCpf, patientCpf, date, hour, callback) {
         callback(res);
     });
 }
+
+
+exports.insertPrescription = function(doctorName, doctorCpf, date, patientName, patientCpf, factoryName, genericName,  callback) {
+    dbo.collection(collectionName5).insertOne({
+        doctorName: doctorName,
+        doctorCpf: doctorCpf,
+        date: date,
+        patientName: patientName,
+        patientCpf: patientCpf,
+        factoryName: factoryName,
+        genericName: genericName,
+        active: true
+    }, function(err, res) {
+            if(err)
+                console.log('Erro ao tentar inserir prescrição de medicamento.');
+
+            callback(res);
+        }
+    );
+}
+
+

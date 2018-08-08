@@ -16,7 +16,6 @@ app.get('/api/login', function(req, res) {
             if(data[0] && data[0].role && data[0].name) {
                 obj.role = data[0].role;
                 obj.name = data[0].name;
-                console.log(data[0].name);
             } else {
                 obj.role = '';
             }
@@ -332,6 +331,29 @@ app.delete('/api/meetings', function(req, res) {
         res.send({'status': response});
     } 
 })
+
+
+app.post('/api/prescriptions', function(req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.doctor && obj.doctor.name && obj.doctor.cpf && obj.date && obj.patient && obj.patient.name && obj.patient.cpf && obj.medicine && obj.medicine.factoryName && obj.medicine.genericName) {
+        controlDB.insertPrescription(obj.doctor.name, obj.doctor.cpf, obj.date, obj.patient.name, obj.patient.cpf, obj.medicine.factoryName, obj.medicine.genericName, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
 
 
 app.listen(8080, 'localhost')

@@ -1,3 +1,23 @@
-<p>
-  prescription-dialog works!
-</p>
+<div>
+  <form class="prescription-form">
+    <mat-form-field>
+      <mat-select [(value)]="prescription.medicine" placeholeder="Nome genérico">
+        <mat-option *ngFor="let medicine of medicines" [value]="medicine">{{ medicine.genericName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(value)]="prescription.cicle" placeholeder="Ciclo">
+          <mat-option value='6/6h'>6/6h</mat-option>
+          <mat-option value='8/8h'>8/8h</mat-option>
+          <mat-option value='12/12h'>12/12h</mat-option>
+          <mat-option value='24/24h'>24/24h</mat-option>
+        </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div>
+  <button type="button" mat-raised-button color="primary" (click)="dialogRef.close({response: false})">Cancelar</button>
+  <button type="button" mat-raised-button color="warn" (click)="dialogRef.close({response: true, prescription: prescription})">Atualizar</button>
+</div>
+
+

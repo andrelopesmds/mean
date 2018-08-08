@@ -4,6 +4,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { MainService } from '../main.service';
 import { User } from '../models/user';
 import { PrescriptionDialogComponent } from './prescription-dialog/prescription-dialog.component';
+import { Prescription } from '../models/prescription';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -50,10 +51,42 @@ export class DoctorDashboardComponent implements OnInit {
   prescriptionDialog(patient: Patient) {
     const dialogRef = this.dialog.open(PrescriptionDialogComponent, {
       data: {
-        patient: patient 
+        patient: patient,
+        doctor: this.user
       }
     });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.response && result.prescription && this.validatePrescription(result.prescription)) {
+        const prescription = result.prescription;
+        prescription.date = new Date();
+        this.mainService.insertPrescription(prescription).subscribe(
+          result => {
+            if (result.status) {
+              alert('Prescrição de medicamento ' + prescription.medicine.genericName + ' para ' + prescription.patient.name + ' salva com sucesso.');  
+            } else {
+              alert('Houve um problema ao cadastrar prescrição de medicamento.');
+            }
+          },
+          erro => {
+            console.log(erro);
+            alert('Houve um problema ao cadastrar prescrição de medicamento.');
+          }
+        )
+      } else {
+        alert('Existem campos vazios que deveriam ser preenchidos.');
+      }
+    });   
+
+  }
+
+  validatePrescription(prescription: Prescription) {
+    let r = false;
+    if(prescription.doctor && prescription.doctor.cpf && prescription.patient && prescription.patient.cpf && prescription.medicine
+    && prescription.medicine.factoryName && prescription.cicle) {
+      r = true;
+    }
+    return r;
   }
 
 }
