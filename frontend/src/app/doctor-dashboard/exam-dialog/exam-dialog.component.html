@@ -1,0 +1,13 @@
+<div>
+  <form class="exam-form">
+    <mat-form-field>
+      <mat-select [(value)]="exam.examType" placeholeder="Tipo de exame">
+        <mat-option *ngFor="let examType of examTypes" [value]="examType">{{ examType }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div>
+  <button type="button" mat-raised-button color="primary" (click)="dialogRef.close({response: false})">Cancelar</button>
+  <button type="button" mat-raised-button color="warn" (click)="dialogRef.close({response: true, exam: exam})">Atualizar</button>
+</div>

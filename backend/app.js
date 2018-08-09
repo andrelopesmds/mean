@@ -354,6 +354,67 @@ app.post('/api/prescriptions', function(req, res) {
     }
 })
 
+app.get('/api/examTypes', function(req, res) {
+    var obj;
+
+    controlDB.getExamTypes(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
+
+app.get('/api/exams', function(req, res) {
+    var obj;
+
+    controlDB.getExams(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
+
+app.post('/api/exams', function(req, res) {
+    var response;
+    var obj = req.body;
+    if(obj.doctor && obj.doctor.cpf && obj.patient && obj.patient.cpf && obj.date && obj.examType) {
+        controlDB.insertExam(obj, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+
+app.put('/api/exams', function(req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.doctorCpf && obj.patientCpf, obj.examType, obj.result) {
+        controlDB.updateExam(obj, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
 
 
 app.listen(8080, 'localhost')

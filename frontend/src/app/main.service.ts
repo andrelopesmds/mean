@@ -7,6 +7,7 @@ import { Subject, Observable } from 'rxjs';
 import { Medicine } from './models/medicine';
 import { MeetingUpdate } from './models/meetingUpdate';
 import { Prescription } from './models/prescription';
+import { Exam } from './models/exam';
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +106,22 @@ export class MainService {
 
   insertPrescription(prescription: Prescription) {
     return this.http.post<any>('api/prescriptions', prescription, this.httpOptions);
+  }
+
+  listExamTypes() {
+    return this.http.get<Array<any>>('api/examTypes');
+  }
+
+  listExams() {
+    return this.http.get<Array<Exam>>('api/exams');
+  }
+
+  insertExam(exam: Exam) {
+    return this.http.post<any>('api/exams', exam, this.httpOptions);
+  }
+
+  updateExam(exam: any) {
+    return this.http.put<any>('api/exams', exam, this.httpOptions);
   }
 
 }

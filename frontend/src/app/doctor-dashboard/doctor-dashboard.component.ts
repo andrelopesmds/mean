@@ -5,6 +5,7 @@ import { MainService } from '../main.service';
 import { User } from '../models/user';
 import { PrescriptionDialogComponent } from './prescription-dialog/prescription-dialog.component';
 import { Prescription } from '../models/prescription';
+import { ExamDialogComponent } from './exam-dialog/exam-dialog.component';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -16,7 +17,7 @@ export class DoctorDashboardComponent implements OnInit {
   @Input() user: User = new User();
   patients: Patient[] = [];
 
-  displayedColumns: string[] = ['cpf', 'name', 'age', 'phone', 'button-request-drug', 'button-ask-exam'];
+  displayedColumns: string[] = ['cpf', 'name', 'age', 'phone', 'button-request-drug', 'button-ask-exam', 'button-history'];
   dataSource = new MatTableDataSource<Patient>();
 
   constructor(
@@ -87,6 +88,35 @@ export class DoctorDashboardComponent implements OnInit {
       r = true;
     }
     return r;
+  }
+
+  examDialog(patient: Patient) {
+    const dialogRef = this.dialog.open(ExamDialogComponent, {
+      data: {
+        doctor: this.user,
+        patient: patient
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result && result.response && result.exam) {
+        const exam = result.exam;
+        exam.date = new Date();
+        this.mainService.insertExam(exam).subscribe(
+          result => {
+            if(result.status) {
+              alert('Exame salvo com sucesso');
+            } else {
+              alert('Houve um erro ao tentar salvar o exame');
+            }
+          },
+          erro => {
+            console.log(erro);
+            alert('Houve um problema ao tentar salvar o exame. Entre em contato com o administrador');
+          }
+        )
+      }
+    });
   }
 
 }

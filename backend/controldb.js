@@ -7,6 +7,8 @@ var collectionName2 = 'medicines';
 var collectionName3 = 'patients';
 var collectionName4 = 'meetings';
 var collectionName5 = 'prescriptions';
+var collectionName6 = 'examTypes';
+var collectionName7 = 'exams';
 var dbo;
 
 exports.createdb = function() {
@@ -266,4 +268,68 @@ exports.insertPrescription = function(doctorName, doctorCpf, date, patientName, 
     );
 }
 
+
+exports.getExamTypes = function(callback) {
+    var proj = { projection: { _id : 0 } };
+    dbo.collection(collectionName6).find({}, proj).toArray(function(err, res) {
+        if (err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+
+exports.getExams = function(callback) {
+    var filter = { active: true, received: false };
+    var proj = { projection: { _id : 0 } };
+    dbo.collection(collectionName7).find(filter, proj).toArray(function(err, res) {
+        if (err)
+            throw err;
+
+        callback(res);
+    });
+}
+
+
+exports.insertExam = function(obj,  callback) {
+    dbo.collection(collectionName7).insertOne({
+        doctorName: obj.doctor.name,
+        doctorCpf: obj.doctor.cpf,
+        date: obj.date,
+        patientName: obj.patient.name,
+        patientCpf: obj.patient.cpf,
+        examType: obj.examType,
+        received: false,
+        active: true
+    }, function(err, res) {
+            if(err)
+                console.log('Erro ao tentar inserir exame.');
+
+            callback(res);
+        }
+    );
+}
+
+
+exports.updateExam = function(obj, callback) {
+    var filter = { 
+        doctorCpf: obj.doctorCpf,
+        patientCpf: obj.patientCpf,
+        date: obj.date,
+        examType: obj.examType,
+        received: false
+    };
+    var obj = { $set: {
+        received: true,
+        result: obj.result
+    }};
+console.log(obj);
+    dbo.collection(collectionName7).updateOne(filter, obj, function(err, res){
+        if(err)
+            throw err;
+
+        callback(res);
+    });
+}
 

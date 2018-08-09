@@ -20,6 +20,9 @@ import { UpdateMedicineDialogComponent } from './assistant-dashboard/update-medi
 import { UpdateMeetingDialogComponent } from './assistant-dashboard/update-meeting-dialog/update-meeting-dialog.component';
 import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.component';
 import { PrescriptionDialogComponent } from './doctor-dashboard/prescription-dialog/prescription-dialog.component';
+import { ExamDialogComponent } from './doctor-dashboard/exam-dialog/exam-dialog.component';
+import { ExamsComponent } from './assistant-dashboard/exams/exams.component';
+import { ExamResultDialogComponent } from './assistant-dashboard/exams/exam-result-dialog/exam-result-dialog.component';
 
 
 
@@ -37,7 +40,10 @@ import { PrescriptionDialogComponent } from './doctor-dashboard/prescription-dia
     UpdateMedicineDialogComponent,
     UpdateMeetingDialogComponent,
     DoctorDashboardComponent,
-    PrescriptionDialogComponent
+    PrescriptionDialogComponent,
+    ExamDialogComponent,
+    ExamsComponent,
+    ExamResultDialogComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent,
@@ -45,7 +51,9 @@ import { PrescriptionDialogComponent } from './doctor-dashboard/prescription-dia
     UpdatePatientDialogComponent,
     UpdateMedicineDialogComponent,
     UpdateMeetingDialogComponent,
-    PrescriptionDialogComponent
+    PrescriptionDialogComponent,
+    ExamDialogComponent,
+    ExamResultDialogComponent
   ],
   imports: [
     BrowserModule,
