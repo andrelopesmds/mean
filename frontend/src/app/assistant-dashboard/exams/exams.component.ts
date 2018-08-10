@@ -33,6 +33,7 @@ export class ExamsComponent implements OnInit {
       result => {
         if (result.length > 0) {
           result.forEach(exam => {
+            if (!exam.received)
             this.exams.push(exam);
           });
         } else {

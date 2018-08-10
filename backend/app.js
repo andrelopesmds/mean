@@ -332,6 +332,15 @@ app.delete('/api/meetings', function(req, res) {
     } 
 })
 
+app.get('/api/prescriptions', function(req, res) {
+    var obj;
+
+    controlDB.getPrescriptions(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
 
 app.post('/api/prescriptions', function(req, res) {
     var response;

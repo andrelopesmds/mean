@@ -23,6 +23,7 @@ import { PrescriptionDialogComponent } from './doctor-dashboard/prescription-dia
 import { ExamDialogComponent } from './doctor-dashboard/exam-dialog/exam-dialog.component';
 import { ExamsComponent } from './assistant-dashboard/exams/exams.component';
 import { ExamResultDialogComponent } from './assistant-dashboard/exams/exam-result-dialog/exam-result-dialog.component';
+import { HistoryComponent } from './doctor-dashboard/history/history.component';
 
 
 
@@ -43,7 +44,8 @@ import { ExamResultDialogComponent } from './assistant-dashboard/exams/exam-resu
     PrescriptionDialogComponent,
     ExamDialogComponent,
     ExamsComponent,
-    ExamResultDialogComponent
+    ExamResultDialogComponent,
+    HistoryComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent,

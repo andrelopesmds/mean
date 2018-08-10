@@ -248,6 +248,16 @@ exports.deleteMeeting = function(doctorCpf, patientCpf, date, hour, callback) {
     });
 }
 
+exports.getPrescriptions = function(callback) {
+    var proj = { projection: { _id : 0 } };
+    dbo.collection(collectionName5).find({}, proj).toArray(function(err, res) {
+        if (err)
+            throw err;
+
+        callback(res);
+    });
+}
+
 
 exports.insertPrescription = function(doctorName, doctorCpf, date, patientName, patientCpf, factoryName, genericName,  callback) {
     dbo.collection(collectionName5).insertOne({
@@ -281,7 +291,7 @@ exports.getExamTypes = function(callback) {
 
 
 exports.getExams = function(callback) {
-    var filter = { active: true, received: false };
+    var filter = { active: true };
     var proj = { projection: { _id : 0 } };
     dbo.collection(collectionName7).find(filter, proj).toArray(function(err, res) {
         if (err)
@@ -324,7 +334,6 @@ exports.updateExam = function(obj, callback) {
         received: true,
         result: obj.result
     }};
-console.log(obj);
     dbo.collection(collectionName7).updateOne(filter, obj, function(err, res){
         if(err)
             throw err;

@@ -104,6 +104,10 @@ export class MainService {
     return this.http.delete<any>('api/medicines?factoryName=' + medicine.factoryName);
   }
 
+  listPrescriptions() {
+    return this.http.get<any>('api/prescriptions');
+  }
+
   insertPrescription(prescription: Prescription) {
     return this.http.post<any>('api/prescriptions', prescription, this.httpOptions);
   }
@@ -113,7 +117,7 @@ export class MainService {
   }
 
   listExams() {
-    return this.http.get<Array<Exam>>('api/exams');
+    return this.http.get<Array<any>>('api/exams');
   }
 
   insertExam(exam: Exam) {

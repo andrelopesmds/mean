@@ -16,6 +16,7 @@ export class DoctorDashboardComponent implements OnInit {
 
   @Input() user: User = new User();
   patients: Patient[] = [];
+  showPatientHistory: Patient;
 
   displayedColumns: string[] = ['cpf', 'name', 'age', 'phone', 'button-request-drug', 'button-ask-exam', 'button-history'];
   dataSource = new MatTableDataSource<Patient>();
@@ -117,6 +118,10 @@ export class DoctorDashboardComponent implements OnInit {
         )
       }
     });
+  }
+
+  showHistory(patient: Patient) {
+    this.showPatientHistory = patient;
   }
 
 }
