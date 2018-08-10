@@ -13,8 +13,9 @@ app.get('/api/login', function(req, res) {
 
     if(obj && obj.cpf && obj.password) {
         controlDB.login(obj.cpf, obj.password, function(data) {
-            if(data[0] && data[0].role) {
+            if(data[0] && data[0].role && data[0].name) {
                 obj.role = data[0].role;
+                obj.name = data[0].name;
             } else {
                 obj.role = '';
             }
@@ -287,6 +288,29 @@ app.post('/api/meetings', function(req, res) {
     }
 })
 
+
+app.put('/api/meetings', function(req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.doctor, obj.doctor.cpf, obj.patient, obj.patient.cpf, obj.oldDate, obj.newDate, obj.oldHour, obj.newHour) {
+        controlDB.updateMeeting(obj.doctor.cpf, obj.patient.cpf, obj.oldDate, obj.newDate, obj.oldHour, obj.newHour, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+
 app.delete('/api/meetings', function(req, res) {
     var response;
     var obj = req.query;
@@ -306,6 +330,99 @@ app.delete('/api/meetings', function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         res.send({'status': response});
     } 
+})
+
+app.get('/api/prescriptions', function(req, res) {
+    var obj;
+
+    controlDB.getPrescriptions(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
+
+app.post('/api/prescriptions', function(req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.doctor && obj.doctor.name && obj.doctor.cpf && obj.date && obj.patient && obj.patient.name && obj.patient.cpf && obj.medicine && obj.medicine.factoryName && obj.medicine.genericName) {
+        controlDB.insertPrescription(obj.doctor.name, obj.doctor.cpf, obj.date, obj.patient.name, obj.patient.cpf, obj.medicine.factoryName, obj.medicine.genericName, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+app.get('/api/examTypes', function(req, res) {
+    var obj;
+
+    controlDB.getExamTypes(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
+
+app.get('/api/exams', function(req, res) {
+    var obj;
+
+    controlDB.getExams(function(data) {
+       obj = data;
+       res.setHeader('Content-Type', 'application/json');
+       res.send(obj);
+    });
+})
+
+app.post('/api/exams', function(req, res) {
+    var response;
+    var obj = req.body;
+    if(obj.doctor && obj.doctor.cpf && obj.patient && obj.patient.cpf && obj.date && obj.examType) {
+        controlDB.insertExam(obj, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
+
+app.put('/api/exams', function(req, res) {
+    var response;
+    var obj = req.body;
+
+    if(obj.doctorCpf && obj.patientCpf, obj.examType, obj.result) {
+        controlDB.updateExam(obj, function(data) {
+            if(data && data.result && data.result.ok == 1) {
+                response = true;
+            } else {
+                response = false;
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.send({'status': response});
+        });
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
 })
 
 

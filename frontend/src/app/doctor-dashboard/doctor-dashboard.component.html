@@ -1,0 +1,50 @@
+<div *ngIf="!showPatientHistory" class="mat-table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef>Idade</th>
+        <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef>CPF</th>
+        <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Telefone</th>
+        <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="button-request-drug">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button type="button" mat-raised-button color="primary" (click)="prescriptionDialog(element)">Prescrever medicamento</button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="button-ask-exam">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button type="button" mat-raised-button color="accent" (click)="examDialog(element)">Solicitar exame</button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="button-history">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button type="button" mat-raised-button color="accent" (click)="showHistory(element)">Ver histórico</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+<app-history *ngIf="showPatientHistory" [patient]="showPatientHistory" (close)="showPatientHistory = null"></app-history>

@@ -1,0 +1,38 @@
+<p>
+Lista de exames com resultado em aberto
+</p>
+
+<div class="mat-table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="doctorName">
+      <th mat-header-cell *matHeaderCellDef>Médico</th>
+      <td mat-cell *matCellDef="let element"> {{element.doctorName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="patientName">
+      <th mat-header-cell *matHeaderCellDef>Paciente</th>
+      <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="examType">
+      <th mat-header-cell *matHeaderCellDef>Exame</th>
+      <td mat-cell *matCellDef="let element"> {{element.examType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Data</th>
+      <td mat-cell *matCellDef="let element"> {{element.date | date : "dd/MM/yyyy" }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="button-insert-result">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button type="button" mat-raised-button color="primary" (click)="resultDialog(element)">Inserir resultado</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

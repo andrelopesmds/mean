@@ -5,6 +5,9 @@ import { Patient } from './models/patient';
 import { Meeting } from './models/metting';
 import { Subject, Observable } from 'rxjs';
 import { Medicine } from './models/medicine';
+import { MeetingUpdate } from './models/meetingUpdate';
+import { Prescription } from './models/prescription';
+import { Exam } from './models/exam';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +72,10 @@ export class MainService {
     return this.http.post<any>('api/meetings', meeting, this.httpOptions);
   }
 
+  updateMeeting(meeting: MeetingUpdate) {
+    return this.http.put<any>('api/meetings', meeting, this.httpOptions);
+  }
+
   removeMeeting(meeting: Meeting){
     return this.http.delete<any>('api/meetings?doctorCpf=' + meeting.doctor.cpf + '&patientCpf=' + meeting.patient.cpf + '&date=' + meeting.date + '&hour=' + meeting.hour);
   }
@@ -95,6 +102,30 @@ export class MainService {
 
   removeMedicine(medicine: Medicine) {
     return this.http.delete<any>('api/medicines?factoryName=' + medicine.factoryName);
+  }
+
+  listPrescriptions() {
+    return this.http.get<any>('api/prescriptions');
+  }
+
+  insertPrescription(prescription: Prescription) {
+    return this.http.post<any>('api/prescriptions', prescription, this.httpOptions);
+  }
+
+  listExamTypes() {
+    return this.http.get<Array<any>>('api/examTypes');
+  }
+
+  listExams() {
+    return this.http.get<Array<any>>('api/exams');
+  }
+
+  insertExam(exam: Exam) {
+    return this.http.post<any>('api/exams', exam, this.httpOptions);
+  }
+
+  updateExam(exam: any) {
+    return this.http.put<any>('api/exams', exam, this.httpOptions);
   }
 
 }

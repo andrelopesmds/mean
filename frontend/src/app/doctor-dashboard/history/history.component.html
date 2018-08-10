@@ -1,0 +1,34 @@
+<div>
+  <div>
+    <button type="button" mat-raised-button color="primary" (click)="closeHistory()">Voltar</button>
+  </div>
+  <div>Histórico de {{ patient.name}}</div>
+</div>
+
+<div class="mat-table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="doctorName">
+      <th mat-header-cell *matHeaderCellDef>Médico</th>
+      <td mat-cell *matCellDef="let element"> {{element.doctorName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let element"> {{element.date | date : "dd/MM/yyyy" }} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="prescriptionOrRquest">
+      <th mat-header-cell *matHeaderCellDef>Medicamento/Exame</th>
+      <td mat-cell *matCellDef="let element"> {{element.prescriptionOrRequest}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="result">
+      <th mat-header-cell *matHeaderCellDef>Resultado</th>
+      <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

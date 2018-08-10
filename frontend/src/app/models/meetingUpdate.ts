@@ -1,9 +1,11 @@
 import { User } from "./user";
 import { Patient } from "./patient";
 
-export class Meeting {
+export class MeetingUpdate {
     doctor: User;
     patient: Patient;
-    date: Date;
-    hour: number;
+    oldDate: Date;
+    oldHour: number;
+    newDate: Date;
+    newHour: number;
 }

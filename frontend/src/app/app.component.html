@@ -27,7 +27,7 @@
     <app-assistant-dashboard></app-assistant-dashboard>
   </div>
   <div *ngSwitchCase="'medico'">
-    Bem vindo medico
+    <app-doctor-dashboard [user]="user"></app-doctor-dashboard>
   </div>
 
 </div>

@@ -1,0 +1,30 @@
+<div>
+  <h1>Médico: {{ meeting.doctor.name }}</h1>
+  <h2>Paciente: {{ meeting.patient.name }}</h2>
+</div>
+<div>
+  <form class="update-meeting-form">
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Escolha um data" (dateChange)="getDate($event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(value)]="meeting.hour">
+        <mat-option value=8>8:00</mat-option>
+        <mat-option value=9>9:00</mat-option>
+        <mat-option value=10>10:00</mat-option>
+        <mat-option value=11>11:00</mat-option>
+        <mat-option value=13>13:00</mat-option>
+        <mat-option value=14>14:00</mat-option>
+        <mat-option value=15>15:00</mat-option>
+        <mat-option value=16>16:00</mat-option>
+        <mat-option value=17>17:00</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div>
+  <button type="button" mat-raised-button color="primary" (click)="dialogRef.close({response: false})">Cancelar</button>
+  <button type="button" mat-raised-button color="warn" (click)="dialogRef.close({response: true, meeting: meeting})">Atualizar</button>
+</div>
