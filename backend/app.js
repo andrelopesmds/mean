@@ -2,6 +2,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var app = express();
 var controlDB = require('./controldb.js');
+var jwt = require('jsonwebtoken');
 
 controlDB.createdb();
 
@@ -9,40 +10,58 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json())
 
 app.get('/api/login', function(req, res) {
-    var obj = req.query;
+    var obj = {};
 
-    if(obj && obj.cpf && obj.password) {
-        controlDB.login(obj.cpf, obj.password, function(data) {
-            if(data[0] && data[0].role && data[0].name) {
+    if(req.query && req.query.cpf && req.query.password) {
+        controlDB.login(req.query.cpf, req.query.password, function(data) {
+            if(data[0] && data[0].role && data[0].name && data[0].cpf) {
                 obj.role = data[0].role;
                 obj.name = data[0].name;
+                obj.cpf = data[0].cpf;
+
+                var token = jwt.sign({ role: obj.role }, 'secretKey', { expiresIn: 86400 });
+                res.setHeader('Content-Type', 'application/json');
+                res.status(200).send({ auth: true, token: token, data: obj });
+
             } else {
-                obj.role = '';
+                res.setHeader('Content-Type', 'application/json');
+                res.status(400).send({ auth: false, message: 'Usuário não encontrado.' });
             }
-            res.setHeader('Content-Type', 'application/json');
-            res.send(obj);         
+        });
+    } else {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(400).send({ auth: false, message: 'Parâmetros inválidos' });
+    }
+})
+
+app.get('/api/users', verifyJwt, (req, res, next) => {
+    if (req.role == 'admin') {
+        controlDB.getUsers(function(data) {
+            var obj = data;
+            res.send(obj);
         });
 
     } else {
-        obj.role = '';
-        res.setHeader('Content-Type', 'application/json');
-        res.send(obj);
+        res.status(400).send({ auth: false, message: 'Sem permissão de acesso' });
     }
-})    
-
-
-app.get('/api/users', function(req, res) {
-    var obj;
-    var role;
-    if(req.query && req.query && req.query.role) {
-        role = req.query.role
-    }
-    controlDB.getUsers(role, function(data) {
-       obj = data;
-       res.setHeader('Content-Type', 'application/json');
-       res.send(obj);
-    });
+    
 })
+
+function verifyJwt(req, res, next) {
+    var token = req.headers['x-access-token'];
+    if (!token)
+        res.status(400).send({ auth: false, message: 'Token não encontrado' });
+
+    else { 
+        jwt.verify(token, 'secretKey', function(err, decoded) {
+            if (err)
+                res.status(400).send({ auth: false, message: 'Token expirado' });
+
+            req.role = decoded.role;
+            next();
+        });
+    }
+}
 
 app.post('/api/users', function(req, res) {
     var response;

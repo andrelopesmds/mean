@@ -10,6 +10,7 @@ import { User } from './models/user';
 export class AppComponent implements OnInit{
   
   title: string = 'Clínica sua Saúde';
+  roleTypes = ['admin', 'assistente', 'medico'];
   user: User = new User();
 
   constructor(
@@ -22,15 +23,17 @@ export class AppComponent implements OnInit{
   login() {
     if(this.user.cpf && this.user.password) {
       this.mainService.login(this.user).subscribe(
-        data => {
-          this.user = data;
-          if(this.user.role != 'admin' && this.user.role != 'assistente' && this.user.role != 'medico') {
+        result => {
+          if (result.auth && result.token && result.data && this.roleTypes.includes(result.data.role)) {
+            this.user = result.data;
+            this.mainService.createHttpOptions(result.token);
+
+          } else {
             alert("Usuário não encontrado ou sem permissão de acesso");
           }
         },
         erro => {
-          console.log(erro);
-          alert("Houve problema de conexão ao efetuar login, entre em contato com o administrador");
+          alert(erro.error.message);
         });
     } else {
       alert("Todos os campos são obrigatórios");

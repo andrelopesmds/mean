@@ -8,28 +8,34 @@ import { Medicine } from './models/medicine';
 import { MeetingUpdate } from './models/meetingUpdate';
 import { Prescription } from './models/prescription';
 import { Exam } from './models/exam';
+import { LoginUser } from './models/loginUser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
+  httpOptions: object;
 
   private subject = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
+  createHttpOptions(token: string) {
+    this.httpOptions = { 
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      })
+    };
+  }
+
   login(user: User) {
-    return this.http.get<User>('/api/login?cpf='+ user.cpf + '&password=' + user.password);
+    return this.http.get<LoginUser>('/api/login?cpf='+ user.cpf + '&password=' + user.password);
   }
 
   listUsers() {
-    return this.http.get<Array<User>>('/api/users');
+    return this.http.get<Array<User>>('/api/users', this.httpOptions);
   }
 
   insertUser(user: User) {
