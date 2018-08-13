@@ -51,7 +51,7 @@ export class MainService {
   }
 
   listPatients() {
-    return this.http.get<Array<Patient>>('api/patients');
+    return this.http.get<Array<Patient>>('api/patients', this.httpOptions);
   }
 
   insertPatient(patient: Patient) {
@@ -67,11 +67,11 @@ export class MainService {
   }
 
   listDoctors() {
-    return this.http.get<Array<User>>('api/users?role=medico');
+    return this.http.get<Array<User>>('api/users?role=medico', this.httpOptions);
   }
 
   listMeetings() {
-    return this.http.get<Array<any>>('api/meetings');
+    return this.http.get<Array<any>>('api/meetings', this.httpOptions);
   }
 
   insertMeeting(meeting: Meeting) {
@@ -83,7 +83,7 @@ export class MainService {
   }
 
   removeMeeting(meeting: Meeting){
-    return this.http.delete<any>('api/meetings?doctorCpf=' + meeting.doctor.cpf + '&patientCpf=' + meeting.patient.cpf + '&date=' + meeting.date + '&hour=' + meeting.hour);
+    return this.http.delete<any>('api/meetings?doctorCpf=' + meeting.doctor.cpf + '&patientCpf=' + meeting.patient.cpf + '&date=' + meeting.date + '&hour=' + meeting.hour, this.httpOptions);
   }
 
   callScheduleToUpdatePatients(update: boolean) {
@@ -95,7 +95,7 @@ export class MainService {
   }
 
   listMedicines() {
-    return this.http.get<Array<Medicine>>('api/medicines');
+    return this.http.get<Array<Medicine>>('api/medicines', this.httpOptions);
   }
 
   insertMedicine(medicine: Medicine) {
@@ -111,7 +111,7 @@ export class MainService {
   }
 
   listPrescriptions() {
-    return this.http.get<any>('api/prescriptions');
+    return this.http.get<any>('api/prescriptions', this.httpOptions);
   }
 
   insertPrescription(prescription: Prescription) {
@@ -119,11 +119,11 @@ export class MainService {
   }
 
   listExamTypes() {
-    return this.http.get<Array<any>>('api/examTypes');
+    return this.http.get<Array<any>>('api/examTypes', this.httpOptions);
   }
 
   listExams() {
-    return this.http.get<Array<any>>('api/exams');
+    return this.http.get<Array<any>>('api/exams', this.httpOptions);
   }
 
   insertExam(exam: Exam) {

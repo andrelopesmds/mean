@@ -6,8 +6,8 @@ var jwt = require('jsonwebtoken');
 
 controlDB.createdb();
 
-app.use(bodyParser.urlencoded({extended : false}));
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended : false }));
+app.use(bodyParser.json());
 
 app.get('/api/login', function(req, res) {
     var obj = {};
@@ -34,36 +34,22 @@ app.get('/api/login', function(req, res) {
     }
 })
 
-app.get('/api/users', verifyJwt, (req, res, next) => {
-    if (req.role == 'admin') {
-        controlDB.getUsers(function(data) {
-            var obj = data;
-            res.send(obj);
-        });
-
-    } else {
-        res.status(400).send({ auth: false, message: 'Sem permissão de acesso' });
-    }
-    
+app.all('/api/users', verifyJwt, (req, res, next) => {
+    next();
 })
 
-function verifyJwt(req, res, next) {
-    var token = req.headers['x-access-token'];
-    if (!token)
-        res.status(400).send({ auth: false, message: 'Token não encontrado' });
+app.get('/api/users', (req, res) => {
 
-    else { 
-        jwt.verify(token, 'secretKey', function(err, decoded) {
-            if (err)
-                res.status(400).send({ auth: false, message: 'Token expirado' });
+    controlDB.getUsers(function(data) {
+        if (data)
+            res.status(200).send(data);
 
-            req.role = decoded.role;
-            next();
-        });
-    }
-}
+        else 
+            res.status(400).send({ message: 'Nenhum usuário encontrado.' });
+    });
+})
 
-app.post('/api/users', function(req, res) {
+app.post('/api/users', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -84,7 +70,7 @@ app.post('/api/users', function(req, res) {
     }
 })
 
-app.put('/api/users', function(req, res) {
+app.put('/api/users', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -105,7 +91,7 @@ app.put('/api/users', function(req, res) {
     }
 })
 
-app.delete('/api/users', function(req, res) {
+app.delete('/api/users', (req, res) => {
     var response;
     var obj = req.query;
 
@@ -124,6 +110,10 @@ app.delete('/api/users', function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         res.send({'status': response});
     } 
+})
+
+app.all('/api/medicines', verifyJwt, (req, res, next) => {
+    next();
 })
 
 
@@ -443,6 +433,23 @@ app.put('/api/exams', function(req, res) {
         res.send({'status': response});
     }
 })
+
+
+function verifyJwt(req, res, next) {
+    var token = req.headers['x-access-token'];
+    if (!token)
+        res.status(400).send({ auth: false, message: 'Token não encontrado' });
+
+    else { 
+        jwt.verify(token, 'secretKey', function(err, decoded) {
+            if (err)
+                res.status(400).send({ auth: false, message: 'Token expirado' });
+
+            req.role = decoded.role;
+            next();
+        });
+    }
+}
 
 
 app.listen(8080, 'localhost')
