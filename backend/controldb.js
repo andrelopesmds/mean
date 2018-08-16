@@ -56,11 +56,14 @@ exports.login = function(cpf, password, callback) {
 }
 
 exports.getUsers = function(role, callback) {
-    var filter = { active: true };
-    if(role) {
-        filter.role = role;
+    var filter;
+    if (role) {
+        filter = { active: true, role: role };
+    } else {
+        var filter = { active: true };
     }
     var proj = { projection: { _id: 0 }};
+
     dbo.collection(collectionName1).find(filter, proj).toArray(function(err, res) {
         if (err)
             throw err;

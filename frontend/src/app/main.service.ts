@@ -8,28 +8,34 @@ import { Medicine } from './models/medicine';
 import { MeetingUpdate } from './models/meetingUpdate';
 import { Prescription } from './models/prescription';
 import { Exam } from './models/exam';
+import { LoginUser } from './models/loginUser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
+  httpOptions: object;
 
   private subject = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
+  createHttpOptions(token: string) {
+    this.httpOptions = { 
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      })
+    };
+  }
+
   login(user: User) {
-    return this.http.get<User>('/api/login?cpf='+ user.cpf + '&password=' + user.password);
+    return this.http.get<LoginUser>('/api/login?cpf='+ user.cpf + '&password=' + user.password);
   }
 
   listUsers() {
-    return this.http.get<Array<User>>('/api/users');
+    return this.http.get<Array<User>>('/api/users', this.httpOptions);
   }
 
   insertUser(user: User) {
@@ -45,7 +51,7 @@ export class MainService {
   }
 
   listPatients() {
-    return this.http.get<Array<Patient>>('api/patients');
+    return this.http.get<Array<Patient>>('api/patients', this.httpOptions);
   }
 
   insertPatient(patient: Patient) {
@@ -61,11 +67,11 @@ export class MainService {
   }
 
   listDoctors() {
-    return this.http.get<Array<User>>('api/users?role=medico');
+    return this.http.get<Array<User>>('api/users?role=medico', this.httpOptions);
   }
 
   listMeetings() {
-    return this.http.get<Array<any>>('api/meetings');
+    return this.http.get<Array<any>>('api/meetings', this.httpOptions);
   }
 
   insertMeeting(meeting: Meeting) {
@@ -77,7 +83,7 @@ export class MainService {
   }
 
   removeMeeting(meeting: Meeting){
-    return this.http.delete<any>('api/meetings?doctorCpf=' + meeting.doctor.cpf + '&patientCpf=' + meeting.patient.cpf + '&date=' + meeting.date + '&hour=' + meeting.hour);
+    return this.http.delete<any>('api/meetings?doctorCpf=' + meeting.doctor.cpf + '&patientCpf=' + meeting.patient.cpf + '&date=' + meeting.date + '&hour=' + meeting.hour, this.httpOptions);
   }
 
   callScheduleToUpdatePatients(update: boolean) {
@@ -89,7 +95,7 @@ export class MainService {
   }
 
   listMedicines() {
-    return this.http.get<Array<Medicine>>('api/medicines');
+    return this.http.get<Array<Medicine>>('api/medicines', this.httpOptions);
   }
 
   insertMedicine(medicine: Medicine) {
@@ -105,7 +111,7 @@ export class MainService {
   }
 
   listPrescriptions() {
-    return this.http.get<any>('api/prescriptions');
+    return this.http.get<any>('api/prescriptions', this.httpOptions);
   }
 
   insertPrescription(prescription: Prescription) {
@@ -113,11 +119,11 @@ export class MainService {
   }
 
   listExamTypes() {
-    return this.http.get<Array<any>>('api/examTypes');
+    return this.http.get<Array<any>>('api/examTypes', this.httpOptions);
   }
 
   listExams() {
-    return this.http.get<Array<any>>('api/exams');
+    return this.http.get<Array<any>>('api/exams', this.httpOptions);
   }
 
   insertExam(exam: Exam) {

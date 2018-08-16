@@ -107,6 +107,12 @@ export class ScheduleComponent implements OnInit {
         } else {
           alert("Não há consultas cadastradas.");
         }
+        this.meetings.sort(function(a, b) {
+          return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+        });
+        this.history.sort(function(a, b) {
+          return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+        });
         this.dataSource.data = this.meetings;
         this.dataSourceHistory.data = this.history;
       },
