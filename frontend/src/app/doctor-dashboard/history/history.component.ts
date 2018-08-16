@@ -54,6 +54,9 @@ export class HistoryComponent implements OnInit {
         dataSource.push(temp);
       });
     }
+    dataSource.sort(function(a, b) {
+      return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+    });
     this.dataSource.data = dataSource;
   }
 

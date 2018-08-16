@@ -55,8 +55,13 @@ exports.login = function(cpf, password, callback) {
     });
 }
 
-exports.getUsers = function(callback) {
-    var filter = { active: true };
+exports.getUsers = function(role, callback) {
+    var filter;
+    if (role) {
+        filter = { active: true, role: role };
+    } else {
+        var filter = { active: true };
+    }
     var proj = { projection: { _id: 0 }};
 
     dbo.collection(collectionName1).find(filter, proj).toArray(function(err, res) {

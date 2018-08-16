@@ -39,6 +39,9 @@ export class ExamsComponent implements OnInit {
         } else {
           alert('Não há exames cadastrados');
         }
+        this.exams.sort(function(a, b) {
+          return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+        });
         this.dataSource.data = this.exams;
       },
       erro => {

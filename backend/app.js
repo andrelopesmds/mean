@@ -4,6 +4,8 @@ var app = express();
 var controlDB = require('./controldb.js');
 var jwt = require('jsonwebtoken');
 
+const secretKey = process.env.SECRET_KEY;
+
 controlDB.createdb();
 
 app.use(bodyParser.urlencoded({ extended : false }));
@@ -19,7 +21,7 @@ app.get('/api/login', function(req, res) {
                 obj.name = data[0].name;
                 obj.cpf = data[0].cpf;
 
-                var token = jwt.sign({ role: obj.role }, 'secretKey', { expiresIn: 86400 });
+                var token = jwt.sign({ role: obj.role }, secretKey, { expiresIn: 86400 });
                 res.setHeader('Content-Type', 'application/json');
                 res.status(200).send({ auth: true, token: token, data: obj });
 
@@ -39,8 +41,12 @@ app.all('/api/users', verifyJwt, (req, res, next) => {
 })
 
 app.get('/api/users', (req, res) => {
+    var role;
+    if (req.query && req.query.role) {
+        role = req.query.role;
+    }
 
-    controlDB.getUsers(function(data) {
+    controlDB.getUsers(role, function(data) {
         if (data)
             res.status(200).send(data);
 
@@ -117,7 +123,7 @@ app.all('/api/medicines', verifyJwt, (req, res, next) => {
 })
 
 
-app.get('/api/medicines', function(req, res) {
+app.get('/api/medicines', (req, res) => {
     var obj;
 
     controlDB.getMedicines(function(data) {
@@ -127,7 +133,7 @@ app.get('/api/medicines', function(req, res) {
     });
 })
 
-app.post('/api/medicines', function (req, res) {
+app.post('/api/medicines', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -149,7 +155,7 @@ app.post('/api/medicines', function (req, res) {
 })
 
 
-app.put('/api/medicines', function(req, res) {
+app.put('/api/medicines', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -170,7 +176,7 @@ app.put('/api/medicines', function(req, res) {
     }
 })
 
-app.delete('/api/medicines', function(req, res) {
+app.delete('/api/medicines', (req, res) => {
     var response;
     var obj = req.query;
 
@@ -191,7 +197,12 @@ app.delete('/api/medicines', function(req, res) {
     } 
 })
 
-app.get('/api/patients', function(req, res) {
+
+app.all('/api/patients', verifyJwt, (req, res, next) => {
+    next();
+})
+
+app.get('/api/patients', (req, res) => {
     var obj;
 
     controlDB.getPatients(function(data) {
@@ -202,7 +213,7 @@ app.get('/api/patients', function(req, res) {
 })
 
 
-app.post('/api/patients', function(req, res) {
+app.post('/api/patients', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -223,7 +234,7 @@ app.post('/api/patients', function(req, res) {
     }
 })
 
-app.put('/api/patients', function(req, res) {
+app.put('/api/patients', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -244,7 +255,7 @@ app.put('/api/patients', function(req, res) {
     }
 })
 
-app.delete('/api/patients', function(req, res) {
+app.delete('/api/patients', (req, res) => {
     var response;
     var obj = req.query;
 
@@ -265,7 +276,11 @@ app.delete('/api/patients', function(req, res) {
     } 
 })
 
-app.get('/api/meetings', function(req, res) {
+app.all('/api/meetings', verifyJwt, (req, res, next) => {
+    next();
+})
+
+app.get('/api/meetings', (req, res) => {
     var obj;
 
     controlDB.getMeetings(function(data) {
@@ -277,7 +292,7 @@ app.get('/api/meetings', function(req, res) {
 
 
 
-app.post('/api/meetings', function(req, res) {
+app.post('/api/meetings', (req, res) => {
     var response;
     var obj = req.body;
     if(obj.doctor && obj.doctor.name && obj.doctor.cpf && obj.patient && obj.patient.name && obj.patient.cpf && obj.date && obj.hour) {
@@ -298,7 +313,7 @@ app.post('/api/meetings', function(req, res) {
 })
 
 
-app.put('/api/meetings', function(req, res) {
+app.put('/api/meetings', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -320,7 +335,7 @@ app.put('/api/meetings', function(req, res) {
 })
 
 
-app.delete('/api/meetings', function(req, res) {
+app.delete('/api/meetings', (req, res) => {
     var response;
     var obj = req.query;
 
@@ -341,7 +356,11 @@ app.delete('/api/meetings', function(req, res) {
     } 
 })
 
-app.get('/api/prescriptions', function(req, res) {
+app.all('/api/prescriptions', verifyJwt, (req, res, next) => {
+    next();
+})
+
+app.get('/api/prescriptions', (req, res) => {
     var obj;
 
     controlDB.getPrescriptions(function(data) {
@@ -351,7 +370,7 @@ app.get('/api/prescriptions', function(req, res) {
     });
 })
 
-app.post('/api/prescriptions', function(req, res) {
+app.post('/api/prescriptions', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -372,7 +391,11 @@ app.post('/api/prescriptions', function(req, res) {
     }
 })
 
-app.get('/api/examTypes', function(req, res) {
+app.all('/api/examTypes', verifyJwt, (req, res, next) => {
+    next();
+})
+
+app.get('/api/examTypes', (req, res) => {
     var obj;
 
     controlDB.getExamTypes(function(data) {
@@ -382,7 +405,11 @@ app.get('/api/examTypes', function(req, res) {
     });
 })
 
-app.get('/api/exams', function(req, res) {
+app.all('/api/exams', verifyJwt, (req, res, next) => {
+    next();
+})
+
+app.get('/api/exams', (req, res) => {
     var obj;
 
     controlDB.getExams(function(data) {
@@ -392,7 +419,7 @@ app.get('/api/exams', function(req, res) {
     });
 })
 
-app.post('/api/exams', function(req, res) {
+app.post('/api/exams', (req, res) => {
     var response;
     var obj = req.body;
     if(obj.doctor && obj.doctor.cpf && obj.patient && obj.patient.cpf && obj.date && obj.examType) {
@@ -413,7 +440,7 @@ app.post('/api/exams', function(req, res) {
 })
 
 
-app.put('/api/exams', function(req, res) {
+app.put('/api/exams', (req, res) => {
     var response;
     var obj = req.body;
 
@@ -441,7 +468,7 @@ function verifyJwt(req, res, next) {
         res.status(400).send({ auth: false, message: 'Token não encontrado' });
 
     else { 
-        jwt.verify(token, 'secretKey', function(err, decoded) {
+        jwt.verify(token, secretKey, function(err, decoded) {
             if (err)
                 res.status(400).send({ auth: false, message: 'Token expirado' });
 
