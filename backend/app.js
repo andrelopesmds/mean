@@ -3,8 +3,10 @@ var bodyParser = require('body-parser')
 var app = express();
 var controlDB = require('./controldb.js');
 var jwt = require('jsonwebtoken');
+var mailer = require('./mailer.js');
 
 const secretKey = process.env.SECRET_KEY;
+const EMAIL = process.env.EMAIL;
 
 controlDB.createdb();
 
@@ -217,8 +219,8 @@ app.post('/api/patients', (req, res) => {
     var response;
     var obj = req.body;
 
-    if(obj.name && obj.age && obj.cpf && obj.phone) {
-        controlDB.insertPatient(obj.name, obj.age, obj.cpf, obj.phone, function(data) {
+    if(obj.name && obj.age && obj.cpf && obj.phone && obj.email) {
+        controlDB.insertPatient(obj.name, obj.age, obj.cpf, obj.phone, obj.email, function(data) {
             if(data && data.result && data.result.ok == 1) {
                 response = true;
             } else {
@@ -238,8 +240,8 @@ app.put('/api/patients', (req, res) => {
     var response;
     var obj = req.body;
 
-    if(obj.name, obj.age, obj.cpf, obj.phone) {
-        controlDB.updatePatient(obj.name, obj.age, obj.cpf, obj.phone, function(data) {
+    if(obj.name && obj.age && obj.cpf && obj.phone && obj.email) {
+        controlDB.updatePatient(obj.name, obj.age, obj.cpf, obj.phone, obj.email, function(data) {
             if(data && data.result && data.result.ok == 1) {
                 response = true;
             } else {
@@ -461,6 +463,47 @@ app.put('/api/exams', (req, res) => {
     }
 })
 
+app.post('/api/emails', verifyJwt, (req, res) => {
+    var response;
+    var obj = req.body;
+
+    if(obj.date && obj.doctorName && obj.patientName && obj.patientCpf && obj.examType && obj.result) {
+
+        controlDB.getPatientEmail(obj.patientCpf, function(data) {
+
+            if (data && data[0] && data[0].email) {
+
+                var mailOptions = {
+                    from: EMAIL,
+                    to: data[0].email,
+                    subject: 'Resultado de exame',
+                    text: writeText(obj)
+                };
+
+                mailer.sendEmail(mailOptions, function(data) {
+                    if (data)
+                        response = true;
+                    else
+                        response = false;
+
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send({ 'status': response });
+                });
+
+            } else {
+                response = false;
+                res.setHeader('Content-Type', 'application/json');
+                res.send({ 'status': response });
+            }
+        });
+
+    } else {
+        response = false;
+        res.setHeader('Content-Type', 'application/json');
+        res.send({'status': response});
+    }
+})
+
 
 function verifyJwt(req, res, next) {
     var token = req.headers['x-access-token'];
@@ -478,5 +521,13 @@ function verifyJwt(req, res, next) {
     }
 }
 
+function writeText(obj) {
+    var temp = new Date(obj.date);
+    var date = ("0" + temp.getDate() ).slice(-2) + '/' + ("0" + temp.getMonth() ).slice(-2) + '/' + temp.getFullYear();
+
+    var text = 'Prezado ' + obj.patientName + ',\nSeu exame está pronto. Segue abaixo o detalhamento.\nMédico responsável pela solicitação de exame: Dr(a). ' + obj.doctorName + '.\nData da solicitação: ' + date + '.\nResultado: ' + obj.result + '.';
+
+    return text;
+}
 
 app.listen(8080, 'localhost')

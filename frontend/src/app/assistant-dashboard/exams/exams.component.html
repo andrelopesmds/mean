@@ -1,7 +1,3 @@
-<p>
-Lista de exames com resultado em aberto
-</p>
-
 <div class="mat-table">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -26,9 +22,17 @@ Lista de exames com resultado em aberto
     </ng-container>
 
     <ng-container matColumnDef="button-insert-result">
+      <th mat-header-cell *matHeaderCellDef>Resultado</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.received">{{ element.result }}</span>
+        <button *ngIf="!element.received" type="button" mat-raised-button color="primary" (click)="resultDialog(element)">Inserir resultado</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="button-send-email">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button type="button" mat-raised-button color="primary" (click)="resultDialog(element)">Inserir resultado</button>
+        <button *ngIf="element.received" type="button" mat-raised-button color="accent" (click)="confirmationEmailDialog(element)">Enviar email</button>
       </td>
     </ng-container>
 

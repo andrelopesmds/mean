@@ -18,6 +18,11 @@
           <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef>Telefone</th>
           <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
@@ -54,6 +59,9 @@
       <mat-form-field>
         <input matInput [(ngModel)]="newPatient.cpf" name="cpf" placeholder="CPF" required>
       </mat-form-field>
+      <mat-form-field>
+          <input matInput [(ngModel)]="newPatient.email" name="email" placeholder="Email" required>
+        </mat-form-field>
       <mat-form-field>
         <input matInput [(ngModel)]="newPatient.phone" name="phone" placeholder="Telefone" required>
       </mat-form-field>

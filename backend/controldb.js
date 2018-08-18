@@ -154,6 +154,18 @@ exports.deleteMedicine = function(factoryName, callback) {
     });
 }
 
+exports.getPatientEmail = function(cpf, callback) {
+    var filter = { active: true, cpf: cpf };
+    var proj = { projection: { _id : 0 } };
+
+    dbo.collection(collectionName3).find(filter, proj).toArray(function(err, res) {
+        if (err)
+            throw err;
+
+        callback(res);
+    });
+}
+
 exports.getPatients = function(callback) {
     var filter = { active: true };
     var proj = { projection: { _id : 0 } };
@@ -166,8 +178,15 @@ exports.getPatients = function(callback) {
 }
 
 
-exports.insertPatient = function(name, age, cpf, phone, callback) {
-    dbo.collection(collectionName3).insertOne({ name: name, age: age, cpf: cpf, phone: phone, active: true}, function(err, res) {
+exports.insertPatient = function(name, age, cpf, phone, email, callback) {
+    dbo.collection(collectionName3).insertOne({
+        name: name,
+        age: age,
+        cpf: cpf,
+        phone: phone,
+        email: email,
+        active: true
+    }, function(err, res) {
         if(err)
             console.log("Erro ao tentar inserir paciente no banco. Cpf: " + cpf);
 
@@ -175,12 +194,13 @@ exports.insertPatient = function(name, age, cpf, phone, callback) {
     });
 }
 
-exports.updatePatient = function(name, age, cpf, phone, callback) {
+exports.updatePatient = function(name, age, cpf, phone, email, callback) {
     var filter = { cpf: cpf };
     var obj = { $set: {
         name: name,
         age: age,
-        phone: phone
+        phone: phone,
+        email: email
     }};
     dbo.collection(collectionName3).updateOne(filter, obj, function(err, res){
         if(err)

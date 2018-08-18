@@ -33,7 +33,7 @@ export class AppComponent implements OnInit{
           }
         },
         erro => {
-          alert(erro.error.message);
+          alert('Não foi possível efetuar login. Contate o administrador para averiguar um possível problema técnico.');
         });
     } else {
       alert("Todos os campos são obrigatórios");

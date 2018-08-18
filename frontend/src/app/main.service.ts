@@ -134,4 +134,8 @@ export class MainService {
     return this.http.put<any>('api/exams', exam, this.httpOptions);
   }
 
+  sendEmail(exam: Exam) {
+    return this.http.post<any>('api/emails', exam, this.httpOptions);
+  }
+
 }

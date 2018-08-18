@@ -5,6 +5,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { User } from '../../models/user';
 import { Patient } from '../../models/patient';
 import { ExamResultDialogComponent } from './exam-result-dialog/exam-result-dialog.component';
+import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-exams',
@@ -15,7 +16,7 @@ export class ExamsComponent implements OnInit {
 
   exams: Exam[] = [];
 
-  displayedColumns: string[] = ['doctorName', 'patientName', 'examType', 'date', 'button-insert-result'];
+  displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'examType', 'button-insert-result', 'button-send-email'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(
@@ -33,7 +34,6 @@ export class ExamsComponent implements OnInit {
       result => {
         if (result.length > 0) {
           result.forEach(exam => {
-            if (!exam.received)
             this.exams.push(exam);
           });
         } else {
@@ -62,6 +62,30 @@ export class ExamsComponent implements OnInit {
       this.mainService.updateExam(result.exam).subscribe(data => {
         this.listExams();
       });
+    });
+  }
+
+  confirmationEmailDialog(exam: any) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Deseja enviar um email à ' + exam.patientName + ' informando o resultado do exame ' + exam.examType + '?',
+        buttonLabel: 'Enviar'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.response) {
+        this.mainService.sendEmail(exam).subscribe(result => {
+          if (result) {
+            alert('Email enviado com sucesso');
+          } else {
+            alert('Não foi possível enviar o email. Verifique se o email cadastrado é válido.');
+          }
+        },
+      erro => {
+        alert('Não foi possível enviar o email. Verifique se o email cadastrado é válido.');
+      });
+      }   
     });
   }
 

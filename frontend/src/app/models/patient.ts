@@ -3,4 +3,5 @@ export class Patient {
     age: number;
     cpf: string;
     phone: string;
+    email: string;
 }
