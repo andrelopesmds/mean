@@ -16,7 +16,7 @@ export class ExamsComponent implements OnInit {
 
   exams: Exam[] = [];
 
-  displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'examType', 'button-insert-result', 'button-send-email'];
+  displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'examType', 'icon-insert-result', 'icon-send-email'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(

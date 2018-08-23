@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssistantDashboardComponent implements OnInit {
 
+  menuOption: number;
+
   constructor() { }
 
   ngOnInit() {
+    this.menuOption = 1;
+  }
+
+  changeMenuOption(option: number) {
+    this.menuOption = option;
   }
 
 }

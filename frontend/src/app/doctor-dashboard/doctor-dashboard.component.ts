@@ -18,7 +18,7 @@ export class DoctorDashboardComponent implements OnInit {
   patients: Patient[] = [];
   showPatientHistory: Patient;
 
-  displayedColumns: string[] = ['cpf', 'name', 'age', 'phone', 'button-request-drug', 'button-ask-exam', 'button-history'];
+  displayedColumns: string[] = ['cpf', 'name', 'age', 'phone', 'icon-request-drug', 'icon-ask-exam', 'icon-history'];
   dataSource = new MatTableDataSource<Patient>();
 
   constructor(
@@ -75,8 +75,6 @@ export class DoctorDashboardComponent implements OnInit {
             alert('Houve um problema ao cadastrar prescrição de medicamento.');
           }
         )
-      } else {
-        alert('Existem campos vazios que deveriam ser preenchidos.');
       }
     });   
 

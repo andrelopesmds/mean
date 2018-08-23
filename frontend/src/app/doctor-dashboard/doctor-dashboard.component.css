@@ -1,3 +1,7 @@
 .mat-table {
     width: 100%;
 }
+.history, .request-drug, .ask-exam {
+    cursor: pointer;
+    color: #673ab7;
+}

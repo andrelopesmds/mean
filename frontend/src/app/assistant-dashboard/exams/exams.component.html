@@ -21,18 +21,18 @@
       <td mat-cell *matCellDef="let element"> {{element.date | date : "dd/MM/yyyy" }} </td>
     </ng-container>
 
-    <ng-container matColumnDef="button-insert-result">
+    <ng-container matColumnDef="icon-insert-result">
       <th mat-header-cell *matHeaderCellDef>Resultado</th>
       <td mat-cell *matCellDef="let element">
         <span *ngIf="element.received">{{ element.result }}</span>
-        <button *ngIf="!element.received" type="button" mat-raised-button color="primary" (click)="resultDialog(element)">Inserir resultado</button>
+        <mat-icon *ngIf="!element.received" class="resultado" (click)="resultDialog(element)">create</mat-icon>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="button-send-email">
-      <th mat-header-cell *matHeaderCellDef></th>
+    <ng-container matColumnDef="icon-send-email">
+      <th mat-header-cell *matHeaderCellDef>Enviar email</th>
       <td mat-cell *matCellDef="let element">
-        <button *ngIf="element.received" type="button" mat-raised-button color="accent" (click)="confirmationEmailDialog(element)">Enviar email</button>
+        <mat-icon *ngIf="element.received" class="email" (click)="confirmationEmailDialog(element)">mail</mat-icon>
       </td>
     </ng-container>
 

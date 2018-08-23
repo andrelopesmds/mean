@@ -31,14 +31,14 @@
         </ng-container>
 
         <ng-container matColumnDef="icon-update">
-          <th mat-header-cell *matHeaderCellDef></th>
+          <th mat-header-cell *matHeaderCellDef>Atualizar</th>
           <td mat-cell *matCellDef="let element">
             <mat-icon class="update" (click)="updateDialog(element)">update</mat-icon>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="icon-remove">
-          <th mat-header-cell *matHeaderCellDef></th>
+          <th mat-header-cell *matHeaderCellDef>Remover</th>
           <td mat-cell *matCellDef="let element">
             <mat-icon class="delete" (click)="deleteConfirmation(element)">delete</mat-icon>
           </td>

@@ -17,7 +17,7 @@ export class MedicinesComponent implements OnInit {
   newMedicine: Medicine = new Medicine();
   utils: Utils = new Utils();
 
-  displayedColumns: string[] = ['genericName', 'factoryName', 'manufacturer', 'button-update', 'button-remove'];
+  displayedColumns: string[] = ['genericName', 'factoryName', 'manufacturer', 'icon-update', 'icon-remove'];
   dataSource = new MatTableDataSource<Medicine>();
 
   constructor(
