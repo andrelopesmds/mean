@@ -1,0 +1,11 @@
+<div class="dialog">
+    <div class="close">
+        <mat-icon (click)="dialogRef.close()">clear</mat-icon>
+    </div>
+    <div *ngIf="icon" class="icon-center">
+        <mat-icon>{{ icon }}</mat-icon>
+    </div>
+    <div class="message">
+        <p> {{ message }} </p>
+    </div>
+</div>

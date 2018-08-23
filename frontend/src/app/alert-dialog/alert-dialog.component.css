@@ -1,0 +1,17 @@
+.dialog {
+    max-width: 320px;
+    max-height: 240px;
+}
+
+.close {
+    cursor: pointer;
+    text-align: right;
+}
+
+.icon-center {
+    text-align: center;
+}
+
+.message {
+    font-family: 'Courier New', Courier, monospace;
+}

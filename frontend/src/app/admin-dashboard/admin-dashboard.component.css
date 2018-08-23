@@ -1,6 +1,25 @@
+.titulo {
+    font-size: 20px;
+    color: #673ab7;
+    padding-left: 8px;
+}
 .new-users-form {
     display: inline-grid;
+    width: 100%;
+    max-width: 280px;
+}
+.cadastrar-tab {
+    text-align: center;
 }
 .mat-table {
     width: 100%;
+}
+.update, .delete {
+    cursor: pointer;
+}
+.update {
+    color: #673ab7;
+}
+.delete {
+    color: red;
 }

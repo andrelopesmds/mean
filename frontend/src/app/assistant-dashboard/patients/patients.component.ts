@@ -5,7 +5,6 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import { UpdatePatientDialogComponent } from '../update-patient-dialog/update-patient-dialog.component';
 import { Utils } from '../../utils/utils';
-import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-patients',

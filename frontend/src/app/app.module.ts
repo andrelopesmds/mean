@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { MatCheckboxModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatTabsModule, MatSelectModule, MatTableModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatCheckboxModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatTabsModule, MatSelectModule, MatTableModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatToolbarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
@@ -24,8 +24,7 @@ import { ExamDialogComponent } from './doctor-dashboard/exam-dialog/exam-dialog.
 import { ExamsComponent } from './assistant-dashboard/exams/exams.component';
 import { ExamResultDialogComponent } from './assistant-dashboard/exams/exam-result-dialog/exam-result-dialog.component';
 import { HistoryComponent } from './doctor-dashboard/history/history.component';
-
-
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +44,8 @@ import { HistoryComponent } from './doctor-dashboard/history/history.component';
     ExamDialogComponent,
     ExamsComponent,
     ExamResultDialogComponent,
-    HistoryComponent
+    HistoryComponent,
+    AlertDialogComponent
   ],
   entryComponents: [
     ConfirmationDialogComponent,
@@ -55,7 +55,8 @@ import { HistoryComponent } from './doctor-dashboard/history/history.component';
     UpdateMeetingDialogComponent,
     PrescriptionDialogComponent,
     ExamDialogComponent,
-    ExamResultDialogComponent
+    ExamResultDialogComponent,
+    AlertDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +73,8 @@ import { HistoryComponent } from './doctor-dashboard/history/history.component';
     MatIconModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
