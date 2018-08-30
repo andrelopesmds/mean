@@ -24,7 +24,7 @@ export class ScheduleComponent implements OnInit {
   newMeeting: Meeting = new Meeting();
   utils: Utils = new Utils();
 
-  displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'hour', 'button-update', 'button-remove'];
+  displayedColumns: string[] = ['doctorName', 'patientName', 'date', 'hour', 'icon-update', 'icon-remove'];
   dataSource = new MatTableDataSource<Meeting>();
   dataSourceHistory = new MatTableDataSource<Meeting>();
 

@@ -17,7 +17,7 @@ export class AdminDashboardComponent implements OnInit {
   users: User[] = [];
   utils: Utils = new Utils();
 
-  displayedColumns: string[] = [ 'cpf', 'name', 'password', 'role', 'phone', 'button-update', 'button-remove'];
+  displayedColumns: string[] = [ 'cpf', 'name', 'password', 'role', 'phone', 'icon-update', 'icon-remove'];
   dataSource = new MatTableDataSource<User>();
 
   constructor(

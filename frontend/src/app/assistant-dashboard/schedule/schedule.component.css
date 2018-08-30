@@ -1,6 +1,20 @@
 .new-schedule-form {
     display: inline-grid;
+    width: 100%;
+    max-width: 280px;
+}
+.cadastrar-tab {
+    text-align: center;
 }
 .mat-table {
     width: 100%;
+}
+.update, .delete {
+    cursor: pointer;
+}
+.update {
+    color: #673ab7;
+}
+.delete {
+    color: red;
 }

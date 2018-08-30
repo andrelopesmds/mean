@@ -21,24 +21,24 @@
         <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="button-request-drug">
-        <th mat-header-cell *matHeaderCellDef></th>
+      <ng-container matColumnDef="icon-request-drug">
+        <th mat-header-cell *matHeaderCellDef>Prescrever Medicamento</th>
         <td mat-cell *matCellDef="let element">
-          <button type="button" mat-raised-button color="primary" (click)="prescriptionDialog(element)">Prescrever medicamento</button>
+          <mat-icon class="request-drug" (click)="prescriptionDialog(element)">add_circle</mat-icon>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="button-ask-exam">
-        <th mat-header-cell *matHeaderCellDef></th>
+      <ng-container matColumnDef="icon-ask-exam">
+        <th mat-header-cell *matHeaderCellDef>Solicitar Exame</th>
         <td mat-cell *matCellDef="let element">
-          <button type="button" mat-raised-button color="accent" (click)="examDialog(element)">Solicitar exame</button>
+          <mat-icon class="ask-exam" (click)="examDialog(element)">add_box</mat-icon>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="button-history">
-        <th mat-header-cell *matHeaderCellDef></th>
+      <ng-container matColumnDef="icon-history">
+        <th mat-header-cell *matHeaderCellDef>Ver Histórico</th>
         <td mat-cell *matCellDef="let element">
-          <button type="button" mat-raised-button color="accent" (click)="showHistory(element)">Ver histórico</button>
+          <mat-icon class="history" (click)="showHistory(element)">history</mat-icon>
         </td>
       </ng-container>
 

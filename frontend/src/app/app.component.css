@@ -1,3 +1,27 @@
+h1, h2 {
+    color: #673ab7;
+}
+.icon-user {
+    font-size: 48px;
+    color: white;
+    padding-right: 8px;
+}
+.logout {
+    cursor: pointer;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+.icon-logout {
+    padding: 8px 14px;
+    font-size: 32px;
+    color: white;
+}
 .login-form {
     display: inline-grid;
+}
+mat-icon {
+    width: auto;
+    font-size: 200px;
+    color: red;
 }

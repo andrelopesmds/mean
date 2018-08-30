@@ -1,0 +1,7 @@
+mat-toolbar-row {
+    border: 1px solid white;
+}
+span {
+    padding: 0px 16px;
+    cursor: pointer;
+}

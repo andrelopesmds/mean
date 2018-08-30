@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from './main.service';
 import { User } from './models/user';
+import { Utils } from './utils/utils';
+import { MatDialog } from '@angular/material';
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +12,14 @@ import { User } from './models/user';
 })
 export class AppComponent implements OnInit{
   
-  title: string = 'Clínica sua Saúde';
+  title: string = 'Clínica + Saúde';
   roleTypes = ['admin', 'assistente', 'medico'];
   user: User = new User();
+  utils: Utils = new Utils();
 
   constructor(
-    private mainService: MainService
+    private mainService: MainService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -29,16 +34,23 @@ export class AppComponent implements OnInit{
             this.mainService.createHttpOptions(result.token);
 
           } else {
-            alert("Usuário não encontrado ou sem permissão de acesso");
+            alert('Usuário não encontrado ou sem permissão de acesso');
           }
         },
-        erro => {
-          alert('Não foi possível efetuar login. Contate o administrador para averiguar um possível problema técnico.');
+        () => {
+          this.dialog.open(AlertDialogComponent, {
+            data: {
+              message: 'Usuário não encontrado ou sem permissão de acesso'
+            }
+          });
         });
     } else {
       alert("Todos os campos são obrigatórios");
     }
   }
-    
+
+  logout() {
+    this.user = new User();
+  }
 
 }

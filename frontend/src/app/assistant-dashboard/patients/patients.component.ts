@@ -5,7 +5,6 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import { UpdatePatientDialogComponent } from '../update-patient-dialog/update-patient-dialog.component';
 import { Utils } from '../../utils/utils';
-import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-patients',
@@ -18,7 +17,7 @@ export class PatientsComponent implements OnInit {
   patients: Patient[] = [];
   utils: Utils = new Utils();
 
-  displayedColumns: string[] = ['cpf', 'name', 'email', 'age', 'phone', 'button-update', 'button-remove'];
+  displayedColumns: string[] = ['cpf', 'name', 'email', 'age', 'phone', 'icon-update', 'icon-remove'];
   dataSource = new MatTableDataSource<Patient>();
 
   constructor(

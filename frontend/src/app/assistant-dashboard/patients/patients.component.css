@@ -1,6 +1,20 @@
 .mat-table {
     width: 100%;
 }
+.cadastrar-tab {
+    text-align: center;
+}
 .new-patient-form {
     display: inline-grid;
+    width: 100%;
+    max-width: 280px;
+}
+.update, .delete {
+    cursor: pointer;
+}
+.update {
+    color: #673ab7;
+}
+.delete {
+    color: red;
 }

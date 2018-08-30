@@ -1,14 +1,13 @@
-<mat-tab-group>
-    <mat-tab label="Pacientes">
-        <app-patients></app-patients>
-    </mat-tab>
-    <mat-tab label="Consultas">
-        <app-schedule></app-schedule>
-    </mat-tab>
-    <mat-tab label="Medicamentos">
-        <app-medicines></app-medicines>
-    </mat-tab>
-    <mat-tab label="Exames">
-        <app-exams></app-exams>
-    </mat-tab>
-</mat-tab-group>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span [ngStyle]="{'font-weight': menuOption == 1 ? '1000' : ''}" (click)="changeMenuOption(1)">Pacientes</span>
+        <span [ngStyle]="{'font-weight': menuOption == 2 ? '1000' : ''}" (click)="changeMenuOption(2)">Consultas</span>
+        <span [ngStyle]="{'font-weight': menuOption == 3 ? '1000' : ''}" (click)="changeMenuOption(3)">Medicamentos</span>
+        <span [ngStyle]="{'font-weight': menuOption == 4 ? '1000' : ''}" (click)="changeMenuOption(4)">Exames</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<app-patients *ngIf="menuOption == 1"></app-patients>
+<app-schedule *ngIf="menuOption == 2"></app-schedule>
+<app-medicines *ngIf="menuOption == 3"></app-medicines>
+<app-exams *ngIf="menuOption == 4"></app-exams>
