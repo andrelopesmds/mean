@@ -1,3 +1,8 @@
+.titulo {
+    font-size: 20px;
+    color: #673ab7;
+    padding: 8px 0px;
+}
 .mat-table {
     width: 100%;
 }

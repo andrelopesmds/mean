@@ -107,7 +107,7 @@ export class MainService {
   }
 
   removeMedicine(medicine: Medicine) {
-    return this.http.delete<any>('api/medicines?factoryName=' + medicine.factoryName);
+    return this.http.delete<any>('api/medicines?factoryName=' + medicine.factoryName, this.httpOptions);
   }
 
   listPrescriptions() {
