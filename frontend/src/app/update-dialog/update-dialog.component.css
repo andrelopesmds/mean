@@ -1,3 +1,6 @@
+.dialog {
+    text-align: center;
+}
 .update-user-form {
     display: inline-grid;
 }

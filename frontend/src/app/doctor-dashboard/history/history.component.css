@@ -1,3 +1,10 @@
+.titulo {
+    display: inline-flex;
+    padding: 8px 0px;
+}
+.subtitulo {
+    padding: 8px 8px;
+}
 .mat-table {
     margin-top: 8px;
     width: 100%;
