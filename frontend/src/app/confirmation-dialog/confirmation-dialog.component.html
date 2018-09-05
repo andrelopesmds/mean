@@ -3,7 +3,7 @@
     {{ message }}
   </p>
 </div>
-<div>
+<div class="buttons">
   <button type="button" mat-raised-button color="primary" (click)="dialogRef.close({response: false})">Cancelar</button>
   <button type="button" mat-raised-button color="warn" (click)="dialogRef.close({response: true})">{{ buttonLabel }}</button>
 </div>

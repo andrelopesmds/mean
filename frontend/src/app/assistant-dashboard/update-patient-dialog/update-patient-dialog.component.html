@@ -1,16 +1,17 @@
-<div>
+<div class="dialog">
+  <div>
     <h1>
       CPF: {{ patient.cpf }}
     </h1>
   </div>
   <div>
     <form class="update-patient-form">
-        <mat-form-field>
-            <input matInput [(ngModel)]="patient.name" name="name" placeholder="Nome" required>
-          </mat-form-field>
-          <mat-form-field>
-              <input matInput [(ngModel)]="patient.email" name="email" placeholder="Email" required>
-            </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="patient.name" name="name" placeholder="Nome" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="patient.email" name="email" placeholder="Email" required>
+      </mat-form-field>
       <mat-form-field>
         <input matInput [(ngModel)]="patient.age" name="age" placeholder="Idade" required>
       </mat-form-field>
@@ -23,3 +24,4 @@
     <button type="button" mat-raised-button color="primary" (click)="dialogRef.close({response: false})">Cancelar</button>
     <button type="button" mat-raised-button color="warn" (click)="dialogRef.close({response: true, patient: patient})">Atualizar</button>
   </div>
+</div>

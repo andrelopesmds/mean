@@ -1,3 +1,6 @@
+.dialog {
+    text-align: center;
+}
 .update-patient-form {
     display: inline-grid;
 }

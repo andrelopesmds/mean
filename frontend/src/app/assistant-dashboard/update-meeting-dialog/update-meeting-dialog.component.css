@@ -1,3 +1,6 @@
+.dialog {
+    text-align: center;
+}
 .update-meeting-form {
     display: inline-grid;
 }
